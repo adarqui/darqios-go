@@ -1,0 +1,29 @@
+#!/bin/bash
+# ./certs name country state location organization department common_name email_address
+
+XDIR="certs"
+
+if [ ! $DIR = "" ] ; then
+	export XDIR="${DIR}"
+fi
+
+mkdir -p "${XDIR}" "${XDIR}"/server "${XDIR}"/client > /dev/null 2>&1
+
+make_cert() {
+	echo "Creating $1 cert"
+	openssl req -new -nodes -x509 -out "${XDIR}"/$1.pem -keyout "${XDIR}"/$1.key -days 365 -subj "/C=$2/ST=$3/L=$4/O=$5/OU=$6/CN=$7/emailAddress=$8"
+}
+
+if [ $# -lt 1 ] ; then
+	echo "Creating generic certs"
+	make_cert "server" "US" "FL" "FTL" "ACME" "SYSADM" "darq.lab" "root@localhost"
+	make_cert "client" "US" "FL" "FTL" "FOOF" "NOBODY" "serv.lab" "client@localhost"
+else
+	make_cert $1 $2 $3 $4 $5 $6 $7 $8
+fi
+
+mv "${XDIR}"/server.pem "${XDIR}"/server/cert.pem
+mv "${XDIR}"/server.key "${XDIR}"/server/cert.key
+
+mv "${XDIR}"/client.pem "${XDIR}"/client/cert.pem
+mv "${XDIR}"/client.key "${XDIR}"/client/cert.key
