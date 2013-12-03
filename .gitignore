@@ -1,6 +1,6 @@
 custom
-darqios
-sha_cert
+./darqios
+./sha_cert
 pkg
 src
 conf.json
