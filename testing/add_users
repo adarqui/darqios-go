@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for i in `ls testing/clients`; do
+export KEY=`go run sha_cert.go testing/clients/$i/client | grep THE_KEY | awk -F: '{print $2}'`
+
+printf "use darqios\ndb.accounts.insert({hash:'${KEY}', host: '$i' , groups: [ 'web', 'mongo' ], status:true})\n"|mongo
+
+
+done

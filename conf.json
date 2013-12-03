@@ -1,0 +1,27 @@
+{
+	"Shared" : {
+		"Port" : "912"
+	},
+	"Http" : {
+		"Host" : "0.0.0.0",
+		"Port" : "911"
+	},
+	"Server" : {
+		"Host" : "0.0.0.0",
+		"Policies" : "general"
+	},
+	"Client" : {
+		"Host" : "127.0.0.1",
+		"Name" : "local"
+	},
+	"Mongo" : {
+		"Addr" : "127.0.0.1",
+		"User" : "",
+		"Pass" : "",
+		"Db" : "darqios"
+	},
+	"Http" : {
+		"Port" : "911"
+	}
+}
+

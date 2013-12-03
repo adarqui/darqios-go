@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Spy</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/pub/app.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/pub/app.css"/>
+
+<script>
+	$(document).ready(function() {
+		var app = new quickApp();
+		app.Register("mon")
+		app.Register("task")
+		app.Register("missing")
+		app.Register("state")
+		app.Register("new:connection")
+		app.Register("end:connection")
+		app.WS_Init()
+	});
+</script>
+
+</head>
+<body>
+<div id="log"></div>
+</body>
+</html>

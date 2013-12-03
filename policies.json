@@ -1,0 +1,192 @@
+{
+	"name" : "general",
+	"base" : "/tmp/darqios/",
+	"policies" : [
+		{
+			"name" : "State",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"interval" : 3,
+			"params" : [ "load", "memory", "processes", "disk", "users", "net" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Ping",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"interval" : 1,
+			"idx" : "darqios",
+			"params" : [],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Ping",
+			"hosts" : [ "" ],
+			"interval" : 1,
+			"idx" : "",
+			"groups" : [],
+			"params" : [ "5", "8.8.8.8", "4.2.2.2" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Load",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"params" : [],
+			"interval" : 7,
+			"thresholds" : [ "1", "3", "5" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Memory",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"params" : [],
+			"idx" : "free",
+			"interval" : 9,
+			"thresholds" : [ "30", "20", "10" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Disk",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"idx" : "free",
+			"interval" : 11,
+			"params" : [ "/" ],
+			"thresholds" : [ "", "", "85" ],
+			"mitigate" : [ "", "", "disk/free.sh" ],
+			"active" : true
+		},
+		{
+			"name" : "Disk",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"interval" : 5,
+			"idx" : "free",
+			"params" : [ "/", "/poop" ],
+			"thresholds" : [ "9", "10", "11" ],
+			"mitigate" : [ "", "", "disk/free.sh" ],
+			"active" : true
+		},
+		{
+			"name" : "Resolve_Hosts",
+			"hosts" : [ "local" ],
+			"groups" : [],
+			"params" : [ "google.com" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Disk",
+			"hosts" : [ "host4" ],
+			"groups" : [],
+			"idx" : "usage",
+			"params" : [ "1", "2", "3" ],
+			"thresholds" : [ "4", "5", "6" ],
+			"mitigate" : [],
+			"active" : false
+		},
+		{
+			"name" : "Process",
+			"desc" : "Check to see if mongo is running",
+			"hosts" : [],
+			"groups" : [ "mongo" ],
+			"interval" : 10,
+			"idx" : "check",
+			"params" : [ "mongo" ],
+			"thresholds" : [ "50", "70", "90" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Process",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"idx" : "check",
+			"interval" : 5,
+			"params" : [ "yes" ],
+			"thresholds" : [ "20", "30", "40" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Process",
+			"desc" : "sleep is so dangerous",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"idx" : "running",
+			"interval" : 10,
+			"params" : [ "sleep" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Process",
+			"hosts" : [ "" ],
+			"groups" : [ "" ],
+			"idx" : "!running",
+			"interval" : 5,
+			"params" : [ "redis-server" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Scheduler",
+			"hosts" : [ "certs2", "certs3", "certs4" ],
+			"groups" : [],
+			"params" : [ "60" ],
+			"mitigate" : [],
+			"active" : true
+		}
+	],
+	"missing" : [
+		{
+			"name" : "Database Server",
+			"desc" : "Mongo or redis servers are missing",
+			"hosts" : [],
+			"group" : [ "mongo", "redis" ],
+			"params" : [ "critical.sh", "critical.sh", "critical.sh" ],
+			"thresholds" : [ "30", "60", "90" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Default",
+			"hosts" : [ "" ],
+			"group" : [],
+			"mitigate" : [],
+			"thresholds" : [ "30", "60", "90" ],
+			"active" : true
+		}
+	],
+	"ignore" : [
+		"local5",
+		"local6",
+		"local7"
+	],
+	"options" : {
+	},
+	"alerts" : {
+		"low" : {
+			"scripts" : [ "low.sh" ]
+		},
+		"med" : {
+			"scripts" : [ "med.sh" ]
+		},
+		"high" : {
+			"scripts" : [ "high.sh" ]
+		}
+	}
+}

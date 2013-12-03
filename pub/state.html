@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Load Average - Last 1 min</title>
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.6.0"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+	<script src="/pub/app.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/pub/app.css"/>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var hash = window.location.hash.replace(/#/g,'')
+			var app = new quickApp();
+			setInterval(function() {
+				app.StateGrab("", hash, function(err, data) {
+					$('.log').empty()
+					for(var v in data) {
+						var datum = data[v]
+						$('.log').append('<p>'+JSON.stringify(datum)+'</p>')
+					}
+				});
+				}, 1000)
+		});
+	</script>
+</head>
+<body>
+	<div class="log"></div>
+</body>
+</html>
