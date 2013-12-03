@@ -1,0 +1,64 @@
+Grabbing a sha512 hash of the public key:
+
+	go run sha_cert.go certs/client 2>/dev/null |grep THE_KEY|awk -F':' '{print $2}'
+
+
+Adding policies.json to mongo:
+
+	cat policies.json | tr -d '\r' | tr -d '\n' > /tmp/p.json ; mongoimport -d darqios -c policies /tmp/p.json
+
+
+Adding a cert to the accounts collection:
+
+db.accounts.insert({hash:"b4585cb110f8ee6fa4a8ed8cb98cca9620346c84ef57375aee9f0bd8afe 30e61f60d80bccc763f98afdeb8348c2ea0ab367e976ba4e037080018337752717108", host: "local" , groups: [ "web", "mongo" ], status:true})
+
+db.accounts.insert({hash:"cfbe680b5ad4f87dc33d4855004d1a1206dbd75c127fa7600717eff21517b9551241070bd74f964c66086a3b66bbbc8f12f186afda7157e2cbf577f46638dd26", host: "local2", groups: [ "db", "mongo" ], status: true})
+
+db.accounts.insert({hash:"b856ed05b395559d42286b59c918552377c98a852a7df0e565ab0bdbb187caff5eea131a3c4f0bf9d4c212837b0a2bb56a8dbe69a7c0c0af150a86961c9c39e4", host: "local3", host: "local3", groups: [ "ssh" ], status: true})
+
+db.accounts.insert({hash:"9f597d157cb38d476393b2d7caabe34ad736c7ae02169001ec1058261cb42f0d8cff8d6bd142919507b6cb2d3a2912f8b4d02b9dbce191129e77f931c855a1cc", host: "local4", groups: [ "redis" ], status: true})
+
+
+Sorting alerts by descending:
+
+	db.alerts.find( { $query: { }, $orderby: { task: { time: -1 }}} )
+	db.alerts.find( { $query: { }, $orderby: { time: -1 }} )
+
+
+Deleting documents without a status key:
+
+
+
+Adding users from a dir of certs:
+
+
+Generating a ton of certs in testing/clients:
+
+for i in `seq 1 100`; do DIR=testing/clients/certs$i ./tools/gen-certs; done
+./testing/add_users
+for i in `ls testing/clients`; do sleep 5 && (go run darqios.go client testing/clients/$i/client &) ; done
+
+Updating all documents in a collection:
+
+db.accounts.update({},{ $set: { "last": 0 } }, false, true)
+
+
+Set profile:
+db.setProfilingLevel(2)
+
+
+Find command while profiling is on:
+
+use darqios
+db.system.profile.find({query:{ns:"darqios.accounts"}}).pretty()
+
+
+
+
+misc:
+
+db.accounts.find({"last":{$lt:ISODate("2013-11-27T05:00:47.240Z")}})
+
+db.state.find().sort({_id:-1}).limit(50)
+
+db.state.find({ $query: { "host": "certs" }, $orderby : {"_id":-1}})

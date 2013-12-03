@@ -1,0 +1,150 @@
+policies:
+
+	need version
+
+	if client has old version, force push to new version
+
+	need to also push code
+
+
+
+
+acounts:
+
+	also needs 'state'
+
+	api for pulling current state
+
+	/account/host/state
+
+state:
+
+	minute by minute state, don't need ping
+
+	/state/host
+
+
+
+
+keep track of how many connections a client has done, and, have this sent as part of their alert history (Current connection number)
+
+auto dl
+
+offline reporting! when task received, but not connected, save to disk
+
+re-connect sync: sync up events from disk if there are any , b4 Do_Task'n
+
+
+
+darqios-go:
+
+	go run darqios.go --server
+
+	go run darqios.go --client
+
+	./darqios/settings.conf
+
+		[shared]
+
+			Port=8899
+
+		[server]
+
+			Local=<address>
+			Critical=<string of emails/phone numbers etc>
+
+		[client]
+
+			Remote=<address>
+			Critical=<string of emails/phone numbers etc>
+
+
+		{
+			"Shared" : {
+				"Host" : "0.0.0.0",
+				"Port" : 8899
+			}
+			"Server" : {
+			}
+			"Client" : {
+			}
+		}
+
+
+Limit text's to Immediately and then once every hour, or something
+
+
+	policy file: policies.json
+
+	{
+		"root" : {
+			"Ping" : [
+				{
+					"Hosts" : [ "*" ],
+					"Params" : [ "Timeout=5s" ]
+				}
+			],
+			"Disk_Usage" : [
+				{
+					"Hosts" : [ "host1", "host2" ],
+					"Params" : [ "Drive=/dev/xvda" ]
+				},
+				{
+					"Hosts" : [ "host3" ],
+					"Params" : [ "Drive=/dev/xvdb" ]
+				}
+			],
+			"Resolve_Hosts" : [
+				{
+					"Hosts" : [ "hosts3" ],
+					"Params" : [ "IP=1.2.3.4" ]
+				}
+			],
+			"!Disk_Usage" : [
+				{
+					"Hosts" : [ "host4" ],
+					"Params" : [ ]
+				}
+			]
+		}
+	}
+
+
+
+
+client/server operations:
+
+	server -> client : FORCE_PULL_CONFIG, PING, RUN
+
+	client -> server : PULL_CONFIG, PING, WHOAMI, TEST
+
+
+
+store all results:
+
+	mongo
+	redis?
+
+
+server:
+
+	go routine loop -> listening/accepting
+
+		verify PUB key against access hash
+
+client:
+
+	go routine loop -> connecting
+
+
+
+modifications to settings.js & certs/*.crts
+
+	watcher
+
+	notify darqios to re-initialize settings, certs, policies, etc
+
+
+
+
+
