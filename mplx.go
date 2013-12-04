@@ -403,7 +403,7 @@ func MPLX_REQ_Task_Raw(M *Main, Acc *Account, T *Task) (bool) {
 		)
 		err := cmd.Run()
 		if err != nil {
-			fmt.Printf("cmd.Run() error %q\n", err, k, j)
+			Debug("cmd.Run() error %q\n", err, k, j)
 			return false
 		}
 		return true

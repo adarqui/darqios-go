@@ -22,7 +22,7 @@ func Task_Compare_Numbers(Thresholds []string, Actual float64, Which byte) (stri
 	 * example: Thresholds[20,50,90], 40 <, ... if 40 <= 20, *if 40 <= 50
 	 */
 
-	fmt.Printf("Original Thresholds: %q\n", Thresholds)
+	Debug("Task_Compare_Numbers:Original Thresholds: %q\n", Thresholds)
 
 	hash := make(map[int]string)
 
@@ -40,8 +40,7 @@ func Task_Compare_Numbers(Thresholds []string, Actual float64, Which byte) (stri
 	T[1] = Thresholds[1]
 	T[2] = Thresholds[0]
 
-	fmt.Printf("New Thresholds: %q\n", T)
-	fmt.Printf("Hash: %q\n", hash)
+	Debug("Task_Compare_Numbers:New Thresholds: %q\n", T)
 
 	for k,v := range(T) {
 		if k > 2 {
@@ -84,5 +83,5 @@ func Task_Compare_Numbers(Thresholds []string, Actual float64, Which byte) (stri
 			}
 		}
 	}
-	return "", NIL_STRING
+	return NIL_STRING, NIL_STRING
 }

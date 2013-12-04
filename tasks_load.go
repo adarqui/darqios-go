@@ -10,7 +10,6 @@ func Task_Load(M *Main, S *State, TD *Task_Data) (bool) {
 
 	result, result_from_threshold := Task_Compare_Numbers(TD.Policy.Thresholds, S.LoadAvg.Last1Min, '>')
 
-	fmt.Printf("result=%q result_from_threshold=%q\n", result, result_from_threshold)
 	if result == "" {
 		return false
 	}
