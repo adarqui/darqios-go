@@ -36,7 +36,7 @@ func MON_Gen_Task_Raw(Type string, Policy *Policy, Subject string, Body string) 
 	task.Type = Type
 	task.Name = Policy.Name
 	task.Idx = Policy.Idx
-	task.Subject = fmt.Sprintf("DARQIOS: %s:%s - (%s) - %s", Policy.Name, Policy.Idx, Subject)
+	task.Subject = fmt.Sprintf("DARQIOS: %s:%s - (%s) - %s", Policy.Name, Policy.Idx, Type, Subject)
 	task.Body = Body
 	task.Time = time.Now()
 
