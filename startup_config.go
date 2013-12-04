@@ -7,6 +7,7 @@ import (
 )
 
 type Shared_Config struct {
+	Debug bool
 	Port string
 }
 
@@ -59,6 +60,9 @@ func (M *Main) SC_Init() {
 	}
 
 	M.Startup_Config = SC
+	if M.Startup_Config.Shared.Debug == true {
+		DEBUG = true
+	}
 	Debug("startup_config:%q\n", M.Startup_Config)
 	return
 }

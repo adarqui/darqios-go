@@ -1,21 +1,10 @@
 package main
 
 import (
-	/*
-	"bytes"
-	"fmt"
-	"os"
-	"reflect"
-	"runtime"
-	"testing"
-	"time"
-	"net"
-	*/
 	"fmt"
 	"bytes"
 	"os"
 	"errors"
-	"log"
 	"time"
 	"net"
 )
@@ -36,7 +25,7 @@ func Task_Ping(M *Main, S *State, TD *Task_Data) (bool) {
 
 		if truth == false {
 			found = true
-			mon := MON_Gen_Task("high", TD.Policy, fmt.Sprintf("%s - Level (%s) - Unable to ping %s\n", TD.Policy.Name, "high", param), "None.")
+			mon := MON_Gen_Task("high", TD.Policy, fmt.Sprintf("Unable to ping %s", param), "None.")
 
 			M.M<-mon
 		}
@@ -51,13 +40,10 @@ func PING_Ipv4(IP string, Timeout time.Duration) (bool) {
 		return false
 	}
 
-	log.Printf("%q %q\n", c, err)
 	c.SetDeadline(time.Now().Add(Timeout * time.Second))
 	defer c.Close()
 
 	typ := icmpv4EchoRequest
-
-	log.Printf("typ:%q\n", typ)
 
 	i := 0
 

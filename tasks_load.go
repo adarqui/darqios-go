@@ -20,7 +20,7 @@ func Task_Load(M *Main, S *State, TD *Task_Data) (bool) {
 		return false
 	}
 
-	mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("Load exceeded - Level (%s) : %f > %s", result, S.LoadAvg.Last1Min, result_from_threshold), string(jsn))
+	mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%f > %s", S.LoadAvg.Last1Min, result_from_threshold), string(jsn))
 
 	M.M<-mon
 

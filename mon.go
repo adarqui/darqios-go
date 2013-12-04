@@ -2,8 +2,7 @@ package main
 
 import (
 	"time"
-//	"log"
-//	"labix.org/v2/mgo/bson"
+	"fmt"
 )
 
 const (
@@ -37,7 +36,7 @@ func MON_Gen_Task_Raw(Type string, Policy *Policy, Subject string, Body string) 
 	task.Type = Type
 	task.Name = Policy.Name
 	task.Idx = Policy.Idx
-	task.Subject = Subject
+	task.Subject = fmt.Sprintf("DARQIOS: %s:%s - (%s) - %s", Policy.Name, Policy.Idx, Subject)
 	task.Body = Body
 	task.Time = time.Now()
 

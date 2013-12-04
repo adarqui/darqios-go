@@ -6,9 +6,12 @@ import (
 	"os"
 )
 
+/*
 const (
 	DEBUG = false
 )
+*/
+var DEBUG bool
 
 var xstd = log.New(os.Stderr, "", log.LstdFlags)
 

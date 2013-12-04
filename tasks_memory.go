@@ -32,7 +32,7 @@ func Task_Memory_Free(M *Main, S *State, TD *Task_Data) (bool) {
 		return false
 	}
 
-	mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%s:%s - Level (%s) : Free memory is %s", TD.Policy.Name, TD.Policy.Idx, result, result_from_threshold), string(jsn))
+	mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("Free memory (%f%%) is below %s%%", percent, result_from_threshold), string(jsn))
 
 	M.M<-mon
 

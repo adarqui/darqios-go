@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gorilla/websocket"
-	"log"
 	"net/http"
 	"time"
 	"strings"
@@ -72,7 +71,7 @@ func (HUB *WS) WS_Run() {
 			close(c.send)
 		case m := <-HUB.broadcast:
 			for c := range HUB.connections {
-				log.Printf("BROADCAST: m.channel: %s, channels: %q\n", m.Channel, c.channels)
+				Debug("BROADCAST: m.channel: %s, channels: %q\n", m.Channel, c.channels)
 				if truth, ok := c.channels[m.Channel]; ok {
 					if truth != true {
 						continue
@@ -129,7 +128,6 @@ func (c *connection) WS_readPump() {
 		if err != nil {
 			break
 		}
-		log.Printf("READPUMP: %v\n", message)
 		bmsg := BMSG{}
 		bmsg.Channel = "cli"
 		bmsg.Data = message
@@ -138,11 +136,7 @@ func (c *connection) WS_readPump() {
 		dec := json.NewDecoder(strings.NewReader(string(message)))
 		dec.Decode(&wsop)
 
-		log.Printf("WSOP: %q %q\n", wsop, message)
-//		log.Fatal(op)
-
 		var truth bool
-
 
 		/*
 		 * WEBSOCKETO OPERATIONS
@@ -183,12 +177,10 @@ func (c *connection) WS_writePump() {
 				c.WS_write(websocket.CloseMessage, []byte{})
 				return
 			}
-			log.Printf("TEXTMESSAGE: %v\n", message)
 			if err := c.WS_write(websocket.TextMessage, message); err != nil {
 				return
 			}
 		case <-ticker.C:
-			log.Printf("PINGMESSAGE!\n")
 			if err := c.WS_write(websocket.PingMessage, []byte{}); err != nil {
 				return
 			}
@@ -211,7 +203,7 @@ func WS_Serve(M *Main, w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not a websocket handshake", 400)
 		return
 	} else if err != nil {
-		log.Println(err)
+		Debug("WS_Serve:Err:%q\n",err)
 		return
 	}
 	c := &connection{send: make(chan []byte, 256), ws: ws, channels: make(map[string]bool)}

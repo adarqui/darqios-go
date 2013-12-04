@@ -44,7 +44,7 @@ func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 
 				found = true
 
-				mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s:%s - Level (%s) : %s is running", TD.Policy.Name, TD.Policy.Idx, alert_level, w), "None.")
+				mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is running", w), "None.")
 
 				M.M<-mon
 			}
@@ -75,7 +75,7 @@ func Task_Process_Not_Running(M *Main, S *State, TD *Task_Data) (bool) {
 
 				found = true
 
-				mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s:%s - Level (%s) : %s is not running", TD.Policy.Name, TD.Policy.Idx, alert_level, w), "None.")
+				mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is not running", w), "None.")
 
 				M.M<-mon
 			}

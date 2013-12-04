@@ -42,7 +42,7 @@ func Task_Disk_Free(M *Main, S *State, TD *Task_Data) (bool) {
 				continue
 			}
 
-			mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%s - Level (%s) : %s exceeds %s%%", TD.Policy.Name, result, disk.Mount, result_from_threshold), string(jsn))
+			mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%s (%f%%) exceeds %s%% capacity", disk.Mount, disk.Avail, result_from_threshold), string(jsn))
 
 			M.M<-mon
 
