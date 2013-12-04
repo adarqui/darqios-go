@@ -77,6 +77,7 @@ func (M *Main) HTTP_Routes() {
 
 	M.HTTP_WS_Init()
 	M.HTTP_Ping_Init()
+	M.HTTP_Policies_Init()
 	M.HTTP_Accounts_Init()
 	M.HTTP_Sessions_Init()
 	M.HTTP_State_Init()

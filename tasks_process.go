@@ -8,18 +8,10 @@ func Task_Process(M *Main, S *State, TD *Task_Data) (bool) {
 	Debug("Task_Process:Entered\n")
 
 	switch TD.Policy.Idx {
-		case "check" :{
-			return Task_Process_Check(M, S, TD)
-		}
-		case "running" : {
-			return Task_Process_Running(M, S, TD)
-		}
-		case "!running" : {
-			return Task_Process_Not_Running(M, S, TD)
-		}
-		default : {
-			return false
-		}
+		case "check" : return Task_Process_Check(M, S, TD)
+		case "running" : return Task_Process_Running(M, S, TD)
+		case "!running" : return Task_Process_Not_Running(M, S, TD)
+		default : return false
 	}
 }
 

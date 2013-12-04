@@ -1,0 +1,117 @@
+ACTUAL:
+
+/accounts
+
+	Finding accounts
+
+		curl 127.0.0.1:911/accounts:list
+		curl 127.0.0.1:911/accounts/get
+		curl 127.0.0.1:911/accounts/get/
+		curl 127.0.0.1:911/accounts/get/certs:certs1:certs2
+
+	Ignored accounts
+
+		curl 127.0.0.1:911/accounts/ignore
+		curl 127.0.0.1:911/accounts/ignore/
+		curl 127.0.0.1:911/accounts/ignore/x:y:z
+		curl 127.0.0.1:911/accounts/unignore/x:y:z
+
+
+	Enable/Disable accounts
+
+		curl 127.0.0.1:911/accounts/enable
+		curl 127.0.0.1:911/accounts/enable/
+		curl 127.0.0.1:911/accounts/enable/x:y:z
+
+		curl 127.0.0.1:911/accounts/disable
+		curl 127.0.0.1:911/accounts/disable
+		curl 127.0.0.1:911/accounts/disable/x:y:z
+
+	Add account:
+
+		curl http://127.0.0.1:911/accounts/add/m/g/a:a/true
+
+	Missing
+
+		curl 127.0.0.1:911/accounts/missing
+
+	Die
+
+-		curl 127.0.0.1:911/accounts/die/x:y:z
+
+
+/ping
+
+	Ping
+
+		curl 127.0.0.1:911/ping
+
+
+/sessions
+
+	List sessions
+
+		curl 127.0.0.1:911/sessions
+
+
+
+/policies
+
+- 		curl ip:911/policies/name
+
+
+
+
+SPECIAL URLS:
+
+	TESTING:
+
+		http://ip:911/pub/state.html#State.LoadAvg.last1min
+		http://ip:911/pub/state.html#State.Network.Connections
+		http://ip:911/pub/state.html#State.Interfaces.Map.wlan0.Rx.Bandwidth
+
+
+	SOCKET.IO
+
+		http://ip:911/pub/spystate.html#help
+		http://ip:911/pub/spystate.html#state:Data.LoadAvg.last1min
+		http://ip:911/pub/spystate.html#state:Data.Memory
+		http://ip:911/pub/spystate.html#state:Data.Proc
+		http://ip:911/pub/spystate.html#state:Data.Disks.Map.Bandwidth
+		http://ip:911/pub/spystate.html#state:Data.Network.Connections
+
+
+
+
+
+
+websocket 'events' that you can subscribe too:
+
+general
+
+	adding / deleting of accounts
+	adding / deleting of policies
+	adding / deleting of ignored
+	etc
+
+spy
+
+	everything
+
+state
+
+	state
+
+missing
+
+	missing alerts
+
+alerts
+
+	alerts coming from tasks
+
+
+
+registering to a channel:
+
+	conn.send({ op: "register", channel: "blah" })

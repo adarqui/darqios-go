@@ -43,3 +43,9 @@ func (M *Main) MG_Lookup_Policies_Config(Name string, Account *Account) (*Polici
 
 	return policy_config, nil
 }
+
+
+func (M *Main) MG_Lookup_Policies_Configs() ([]*Policies_Config, error) {
+	// FIXME - add this functionality
+	return nil,nil
+}

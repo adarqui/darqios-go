@@ -1,0 +1,7 @@
+/policies /policies/get/{name}
+Critical_Notes []string in Policy
+/query/{..} -> a powerful query route which can pull info based on accounts, groups, and timestamps etc
+Load policy: idx last1min, last5min, last10min
+Allow a policy to 'fall through' to default if not specified already -> ie for a host having a specific policy for / and then another match for /. Second match shouldn't hit if !specified is set, etc.
+segfault/process killed/kernel oops checker -> hash dmesg
+move "alert level" for some of those policies, that's grabbed from thresholds[], to idx: "!running:high"
