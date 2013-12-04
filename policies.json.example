@@ -109,7 +109,7 @@
 			"name" : "Process",
 			"desc" : "Nginx",
 			"hosts" : [],
-			"groups" : [ "all" ],
+			"groups" : [ "nginx" ],
 			"idx" : "!running",
 			"interval" : 10,
 			"level" : "high",
