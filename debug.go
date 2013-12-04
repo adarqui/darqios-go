@@ -21,6 +21,13 @@ func Debug(format string, v ... interface{}) {
 	}
 }
 
+func DebugFatal(Status int, format string, v ... interface{}) {
+	if DEBUG == true {
+		xstd.Output(2, fmt.Sprintf(format, v...))
+		os.Exit(Status)
+	}
+}
+
 func DebugLn(v ... interface{}) {
 	if DEBUG == true {
 		xstd.Output(2, fmt.Sprintln(v...))

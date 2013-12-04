@@ -31,7 +31,10 @@ func Task_Disk_Free(M *Main, S *State, TD *Task_Data) (bool) {
 
 	for _, disk_name := range TD.Policy.Params {
 		if disk, ok := S.Disks.Map[disk_name]; ok {
-			result, result_from_threshold := Task_Compare_Numbers(TD.Policy.Thresholds, float64(disk.Avail), '>')
+
+			percent := float64(disk.Used) / float64(disk.Size) * float64(100)
+
+			result, result_from_threshold := Task_Compare_Numbers(TD.Policy.Thresholds, percent, '>')
 
 			if result == "" {
 				continue
@@ -42,7 +45,7 @@ func Task_Disk_Free(M *Main, S *State, TD *Task_Data) (bool) {
 				continue
 			}
 
-			mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%s (%f%%) exceeds %s%% capacity", disk.Mount, disk.Avail, result_from_threshold), string(jsn))
+			mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%s (%f%%) exceeds %s%% capacity", disk.Mount, percent, result_from_threshold), string(jsn))
 
 			M.M<-mon
 
