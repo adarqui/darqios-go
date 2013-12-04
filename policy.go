@@ -47,7 +47,9 @@ func (Policy *Policy) Sanitize() {
 		Policy.Active = false
 	}
 
+	/*
 	if len(Policy.Mitigate) > 0 && len(Policy.Mitigate) != 3 {
 		Policy.Active = false
 	}
+	*/
 }
