@@ -13,7 +13,7 @@ func (M *Main) WATCH_Init() {
 	mplx.Op = MPLX_REQ_LIST_SESSIONS
 
 	for {
-		time.Sleep(5*time.Second)
+		time.Sleep(M.Startup_Config.Server.Watcher*time.Second)
 
 		now := time.Now()
 		accounts, err := M.MG_Accounts_Find_Missing(now)

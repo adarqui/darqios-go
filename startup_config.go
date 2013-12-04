@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 	"io/ioutil"
 	"encoding/json"
 )
@@ -15,6 +16,7 @@ type Server_Config struct {
 	Host string
 	Policies string
 	Daemonize bool
+	Watcher time.Duration
 }
 
 type Client_Config struct {
@@ -62,6 +64,9 @@ func (M *Main) SC_Init() {
 	M.Startup_Config = SC
 	if M.Startup_Config.Shared.Debug == true {
 		DEBUG = true
+	}
+	if M.Startup_Config.Server.Watcher <= 0 {
+		M.Startup_Config.Server.Watcher = 30
 	}
 	Debug("startup_config:%q\n", M.Startup_Config)
 	return
