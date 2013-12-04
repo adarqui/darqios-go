@@ -36,7 +36,7 @@ Generating a ton of certs in testing/clients:
 
 for i in `seq 1 100`; do DIR=testing/clients/certs$i ./tools/gen-certs; done
 ./testing/add_users
-for i in `ls testing/clients`; do sleep 5 && (go run darqios.go client testing/clients/$i/client &) ; done
+for i in `ls testing/clients`; do sleep 5 && (./darqios client testing/clients/$i/client &) ; done
 
 Updating all documents in a collection:
 
