@@ -95,8 +95,8 @@
 		{
 			"name" : "Process",
 			"desc" : "Notify us immediately when these critical services are not running",
-			"hosts" : [],
-			"groups" : [ "mongo" ],
+			"hosts" : [ "" ],
+			"groups" : [],
 			"interval" : 10,
 			"idx" : "!running",
 			"params" : [ "mongod", "redis-server", "node ec2web", "sshd" ],
