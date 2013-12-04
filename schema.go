@@ -46,6 +46,7 @@ type Policy struct {
 	Groups []string
 	Interval int
 	Idx string
+	Level string
 	Flags []string
 	Params []string
 	Thresholds []string

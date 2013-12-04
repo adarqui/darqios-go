@@ -1,6 +1,6 @@
 {
 	"name" : "general",
-	"base" : "/tmp/darqios/",
+	"base" : "/etc/darqios/",
 	"policies" : [
 		{
 			"name" : "State",
@@ -99,6 +99,7 @@
 			"groups" : [],
 			"interval" : 10,
 			"idx" : "!running",
+			"level" : "high",
 			"params" : [ "mongod", "redis-server", "node ec2web", "sshd" ],
 			"thresholds" : [],
 			"mitigate" : [],
@@ -108,8 +109,9 @@
 			"name" : "Process",
 			"desc" : "Notify us when these services are running",
 			"hosts" : [ "" ],
-			"groups" : [ "" ],
+			"groups" : [],
 			"idx" : "running",
+			"level" : "high",
 			"interval" : 60,
 			"params" : [ "tcpdump" ],
 			"thresholds" : [ "120", "300", "600" ],

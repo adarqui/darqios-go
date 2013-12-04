@@ -85,3 +85,24 @@ func Task_Compare_Numbers(Thresholds []string, Actual float64, Which byte) (stri
 	}
 	return NIL_STRING, NIL_STRING
 }
+
+
+
+
+func Tasks_Alert_Level_From_Idx(P *Policy) (string) {
+
+	/*
+	arr := strings.Split(P.Idx, ":")
+	if len(arr) != 2 {
+		return "high"
+	}
+
+	return arr[1]
+	*/
+
+
+	if P.Level != "" {
+		return P.Level
+	}
+	return "high"
+}

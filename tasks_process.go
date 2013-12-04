@@ -18,28 +18,21 @@ func Task_Process(M *Main, S *State, TD *Task_Data) (bool) {
 
 func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 
-	var alert_level string
-
-	if len(TD.Policy.Thresholds) == 0 {
-		alert_level = "high"
-	} else {
-		alert_level = TD.Policy.Thresholds[0]
-	}
-
-
 	found := false
 
-	for _, v := range S.Processes.Map {
+	alert_level := Tasks_Alert_Level_From_Idx(TD.Policy)
 
-		for _, w := range TD.Policy.Params {
-			if v.Comm == w {
-
+	for _, check_process := range TD.Policy.Params {
+		found = false
+		for _, actual_process := range S.Processes.Map {
+			if check_process == actual_process.Comm {
 				found = true
-
-				mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is running", w), "None.")
-
-				M.M<-mon
+				break
 			}
+		}
+		if found == true {
+			mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is running", check_process),  "None.")
+			M.M<-mon
 		}
 	}
 
@@ -51,26 +44,21 @@ func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 
 func Task_Process_Not_Running(M *Main, S *State, TD *Task_Data) (bool) {
 
-	var alert_level string
-
 	found := false
 
-	if len(TD.Policy.Thresholds) == 0 {
-		alert_level = "high"
-	} else {
-		alert_level = TD.Policy.Thresholds[0]
-	}
+	alert_level := Tasks_Alert_Level_From_Idx(TD.Policy)
 
-	for _, v := range S.Processes.Map {
-		for _, w := range TD.Policy.Params {
-			if v.Comm == w {
-
+	for _, check_process := range TD.Policy.Params {
+		found = false
+		for _, actual_process := range S.Processes.Map {
+			if check_process == actual_process.Comm {
 				found = true
-
-				mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is not running", w), "None.")
-
-				M.M<-mon
+				break
 			}
+		}
+		if found == false {
+			mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is not running", check_process), "None")
+			M.M<-mon
 		}
 	}
 
