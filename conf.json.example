@@ -8,10 +8,13 @@
 		"Port" : "911"
 	},
 	"Server" : {
+		"Daemonize" : false,
 		"Host" : "0.0.0.0",
-		"Policies" : "general"
+		"Policies" : "general",
+		"Watcher" : 30
 	},
 	"Client" : {
+		"Daemonize" : false,
 		"Host" : "127.0.0.1",
 		"Name" : "local"
 	},
