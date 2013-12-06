@@ -7,4 +7,4 @@ conf.json
 policies.json
 mitigate
 !testing/darqios
-!testing/mitigate
+!testing/darqios/mitigate
