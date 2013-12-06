@@ -1,7 +1,7 @@
 package main
 
 import (
-//	"log"
+	"fmt"
 	"time"
 	"strings"
 	"strconv"
@@ -38,7 +38,7 @@ type State struct {
 	History_Interfaces map[string]XInterface
 	History_Disks map[string]Disk
 	/* [Policy.Name][Policy.Idx]Threshold */
-	Mitigate_Hash map[string]map[string]string
+	Alerts_Hash map[string]bool
 }
 
 type State_Report_Memory struct {
@@ -173,6 +173,8 @@ func (M *Main) STATE_Init() (*State) {
 	S.STATE_Init_Disks()
 	S.STATE_Init_Network()
 
+	S.STATE_Hash_Init()
+
 	return S
 }
 
@@ -297,4 +299,45 @@ func STATE_Get_Users() (*Users) {
 	}
 
 	return U
+}
+
+
+func (S *State) STATE_Hash_Init() {
+	S.Alerts_Hash = make(map[string]bool)
+}
+
+/* GENERIC FUNCTION */
+func (S *State) STATE_Hash_Exists(Policy_Name string, Policy_Idx string, Policy_Actual string) (bool) {
+
+	/* Check to see if a task was hashed => [name][idx][actual] */
+	hash_index := fmt.Sprintf("%s:%s:%s", Policy_Name, Policy_Idx, Policy_Actual)
+	if _, ok := S.Alerts_Hash[hash_index]; ok {
+		return true
+	}
+	return false
+}
+
+func (S *State) STATE_Hash_Clear(Policy_Name string, Policy_Idx string, Policy_Actual string, P *Policy) (bool) {
+	hash_index := fmt.Sprintf("%s:%s:%s", Policy_Name, Policy_Idx, Policy_Actual)
+	if _,ok := S.Alerts_Hash[hash_index]; ok {
+		delete(S.Alerts_Hash, hash_index)
+
+		mon := new(MON)
+		mon.Op = MON_REQ_TASK
+		task := MON_Gen_Task_Raw("low", Policy_Actual, P, fmt.Sprintf("%s is no longer an issue", Policy_Actual), "None")
+		mon.Data = task
+		S.M.M<-mon
+	}
+	return false
+}
+
+
+func (S *State) STATE_Hash_Add(Policy_Name string, Policy_Idx string, Policy_Actual string) (bool) {
+
+	hash_index := fmt.Sprintf("%s:%s:%s", Policy_Name, Policy_Idx, Policy_Actual)
+	if _, ok := S.Alerts_Hash[hash_index]; !ok {
+		S.Alerts_Hash[hash_index] = true
+	}
+
+	return false
 }

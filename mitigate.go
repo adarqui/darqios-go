@@ -19,10 +19,6 @@ type Task struct {
 }
 */
 
-func (TD *Task_Data) MG8_Hash_Exists(Policy_Name string, Policy_Idx string, Policy_Actual string) (bool) {
-	/* Check to see if a task was hashed => [name][idx][actual] */
-	return false
-}
 
 func (TD * Task_Data) MG8_Launch(T *Task) (bool) {
 
@@ -56,12 +52,20 @@ func (TD *Task_Data) MG8_Handle_Alert(T *Task) (bool) {
 		if err != nil {
 			Debug("MG8_Handle_Alert:cmd.Run:Err:%q\n",err)
 			T2 := *T
-			T2.Subject = fmt.Sprintf("DARQIOS: %s:%s:%s Failed to mitigate %s:%s", T2.Name, T2.Idx, T2.Type, T2.Actual, T2.Threshold)
+			T2.Subject = fmt.Sprintf("%s:%s:%s Failed to mitigate %s:%s", T2.Name, T2.Idx, T2.Type, T2.Actual, T2.Threshold)
 			T2.Body = fmt.Sprintf("ERROR:%q\n",err)
 
 
 			mon := new(MON)
 			mon.Op = MON_REQ_TASK
+			mon.Data = &T2
+			TD.State.M.M <- mon
+		} else {
+			mon := new(MON)
+			mon.Op = MON_REQ_TASK
+			T2 := *T
+			T2.Subject = fmt.Sprintf("%s:%s:%s - %s = Success", T2.Name, T2.Idx, T2.Type, script_path)
+			T2.Body = "None"
 			mon.Data = &T2
 			TD.State.M.M <- mon
 		}

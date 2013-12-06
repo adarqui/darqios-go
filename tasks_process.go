@@ -73,6 +73,16 @@ func Task_Process_Not_Running_Generic(M *Main, S *State, TD *Task_Data, Single b
 				/* When set, only fire off one Gen_Task.. for example, when multiple processes being down can trigger one and only one restart script. */
 				return found
 			}
+		} else {
+			/*
+			 * Here's where it gets tricky... We need to notify users of a cleared alert
+			 */
+			truth := S.STATE_Hash_Exists(TD.Policy.Name, TD.Policy.Idx, check_process)
+			if truth == true {
+				/* This means we've had an alert, that is now clear, so notify */
+				S.STATE_Hash_Clear(TD.Policy.Name, TD.Policy.Idx, check_process, TD.Policy)
+			}
+
 		}
 	}
 

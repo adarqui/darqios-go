@@ -28,6 +28,10 @@ func (S *State) MON_Gen_Task(Type string, Actual string, Policy *Policy, Subject
 
 	Debug("MON_Gen_Task:MON_REQ_TASK:%q\n", mon)
 
+	/* Where to put this? */
+
+	S.STATE_Hash_Add(Policy.Name, Policy.Idx, Actual)
+
 	/*
 	 * Mitigation entry point
 	 */
