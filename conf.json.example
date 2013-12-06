@@ -11,12 +11,14 @@
 		"Daemonize" : false,
 		"Host" : "0.0.0.0",
 		"Policies" : "general",
-		"Watcher" : 30
+		"Watcher" : 30,
+		"Base" : "/etc/darqios"
 	},
 	"Client" : {
 		"Daemonize" : false,
 		"Host" : "127.0.0.1",
-		"Name" : "local"
+		"Name" : "local",
+		"Base" : "."
 	},
 	"Mongo" : {
 		"Addr" : "127.0.0.1",
