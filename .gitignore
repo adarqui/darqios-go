@@ -5,4 +5,6 @@ pkg
 src
 conf.json
 policies.json
+mitigate
 !testing/darqios
+!testing/mitigate

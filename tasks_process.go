@@ -20,7 +20,7 @@ func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 
 	found := false
 
-	alert_level := Tasks_Alert_Level_From_Idx(TD.Policy)
+	alert_level := Task_Get_Alert_Level(TD.Policy)
 
 	for _, check_process := range TD.Policy.Params {
 		found = false
@@ -31,7 +31,7 @@ func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 			}
 		}
 		if found == true {
-			mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is running", check_process),  "None.")
+			mon := S.MON_Gen_Task(alert_level, check_process, TD.Policy, fmt.Sprintf("%s is running", check_process),  "None.")
 			M.M<-mon
 		}
 	}
@@ -46,7 +46,7 @@ func Task_Process_Not_Running(M *Main, S *State, TD *Task_Data) (bool) {
 
 	found := false
 
-	alert_level := Tasks_Alert_Level_From_Idx(TD.Policy)
+	alert_level := Task_Get_Alert_Level(TD.Policy)
 
 	for _, check_process := range TD.Policy.Params {
 		found = false
@@ -57,7 +57,7 @@ func Task_Process_Not_Running(M *Main, S *State, TD *Task_Data) (bool) {
 			}
 		}
 		if found == false {
-			mon := MON_Gen_Task(alert_level, TD.Policy, fmt.Sprintf("%s is not running", check_process), "None")
+			mon := S.MON_Gen_Task(alert_level, check_process, TD.Policy, fmt.Sprintf("%s is not running", check_process), "None")
 			M.M<-mon
 		}
 	}

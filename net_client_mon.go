@@ -9,11 +9,12 @@ func (M *Main) NET_Client_MON() {
 		"Memory" : Task_Memory,
 		"Process" : Task_Process,
 		"Disk" : Task_Disk,
+		"Network" : Task_Network,
 		"Scheduler" : Task_Scheduler,
 		"State" : Task_State,
 	}
 
-	state := STATE_Init()
+	state := M.STATE_Init()
 
 	for {
 		state.STATE_Sleep()
@@ -24,7 +25,9 @@ func (M *Main) NET_Client_MON() {
 			continue
 		}
 
-		state.STATE_Get()
+		if (state.Interval_Counter % 5) == 0 {
+			state.STATE_Get()
+		}
 
 		for _, policy := range M.Policies_Config.Policies {
 			truth := state.STATE_Should_Run(policy)

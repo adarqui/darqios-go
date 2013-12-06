@@ -23,6 +23,7 @@ type State_Report struct {
 }
 
 type State struct {
+	M * Main
 	Processes *Processes
 	LoadAvg *linux.LoadAvg
 	Disks *Disks
@@ -32,9 +33,12 @@ type State struct {
 	Interval time.Duration
 	Interval_Counter int
 	Network *Network
+	Network_Map *Network_Map
 	Interfaces *Interfaces
 	History_Interfaces map[string]XInterface
 	History_Disks map[string]Disk
+	/* [Policy.Name][Policy.Idx]Threshold */
+	Mitigate_Hash map[string]map[string]string
 }
 
 type State_Report_Memory struct {
@@ -103,6 +107,10 @@ type Network struct {
 	Listeners []*Network_Listener
 }
 
+type Network_Map struct {
+	Sockets map[int]map[string]bool
+}
+
 /*
 type Interface struct {
 	Name string
@@ -151,18 +159,34 @@ type Users struct {
 }
 
 
-func STATE_Init() (*State) {
+func (M *Main) STATE_Init() (*State) {
 	S := new(State)
-	S.Interval = 1
 
+	/* dirty, tired of passing around M.. sad */
+	S.M = M
+//	S.Interval = 1
+
+/*	sleep := M.STATE_Init_Interval()
+	S.Interval = time.Duration(sleep)
+	*/
+	S.Interval = 1*time.Second
 	S.STATE_Init_Disks()
 	S.STATE_Init_Network()
 
 	return S
 }
 
+func (M *Main) STATE_Init_Interval() (int) {
+	for _, policy := range M.Policies_Config.Policies {
+		if policy.Name == "State" && policy.Active == true {
+			return policy.Interval
+		}
+	}
+	return 1
+}
+
 func (S *State) STATE_Sleep() {
-	time.Sleep(S.Interval * time.Second)
+	time.Sleep(S.Interval)
 	S.Interval_Counter++
 }
 
@@ -185,7 +209,7 @@ func (S *State) STATE_Get() {
 	S.Users = STATE_Get_Users()
 	S.LoadAvg, _ = STATE_Get_LoadAvg()
 	S.Memory, _ = STATE_Get_Memory()
-	S.Network = STATE_Get_Network()
+	S.Network = S.STATE_Get_Network()
 	S.Interfaces = S.STATE_Get_Interfaces()
 }
 

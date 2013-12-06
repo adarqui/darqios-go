@@ -25,7 +25,7 @@ func Task_Ping(M *Main, S *State, TD *Task_Data) (bool) {
 
 		if truth == false {
 			found = true
-			mon := MON_Gen_Task("high", TD.Policy, fmt.Sprintf("Unable to ping %s", param), "None.")
+			mon := S.MON_Gen_Task("high", param, TD.Policy, fmt.Sprintf("Unable to ping %s", param), "None.")
 
 			M.M<-mon
 		}

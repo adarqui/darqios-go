@@ -32,7 +32,7 @@ func Task_Load_Generic(M *Main, S *State, TD *Task_Data, Load float64) (bool) {
 		return false
 	}
 
-	mon := MON_Gen_Task(result, TD.Policy, fmt.Sprintf("%f > %s", Load, result_from_threshold), string(jsn))
+	mon := S.MON_Gen_Task(result, "load", TD.Policy, fmt.Sprintf("%f > %s", Load, result_from_threshold), string(jsn))
 
 	M.M<-mon
 

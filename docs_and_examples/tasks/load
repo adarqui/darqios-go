@@ -1,0 +1,9 @@
+LOAD:
+
+	Verify load average falls within safe limits
+
+	idx: last1min | last5min | last15min
+
+	thresholds: [ "low", "med", "high" ]
+
+	If system load (1,5, or 15) exceeds {thresholds}, fire off an alert

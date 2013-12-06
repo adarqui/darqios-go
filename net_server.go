@@ -144,7 +144,7 @@ func (M *Main) NET_Server_Handle_Client(Conn net.Conn) {
 	if message.Op == MPLX_REP_DATA {
 		if data,ok := message.Data.(*Policies_Config); ok {
 
-			Debug("SENDING POLICIES_CONFIG TO CLIENT: %v\n", data)
+			Debug("SENDING POLICIES_CONFIG TO CLIENT: %q\n", data)
 
 			wop := WOP_Gen_Rep_Policies_Config(data)
 			wop_bytes, err := WOP_To_Bytes(wop)

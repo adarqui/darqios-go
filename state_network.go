@@ -44,7 +44,25 @@ func STATE_XInterfaces_2MAP(Interfaces *Interfaces) (*State_Report_Interfaces) {
 	return SRI
 }
 
-func STATE_Get_Network() (*Network) {
+
+func STATE_Get_Network_Map() (*Network_Map) {
+	/*
+	 * Now add a [port][proto][bool] hash for quick network service lookups
+	 */
+
+	DebugLn("STATE_Get_Network_Map:Initialize")
+	NM := new(Network_Map)
+	NM.Sockets = make(map[int]map[string]bool)
+
+	 return NM
+}
+
+
+func (S *State) STATE_Get_Network() (*Network) {
+
+	/*
+	 * needed because this won't work unless we're root.. so we have to fix that
+	 */
 
 	N := new(Network)
 	N.Listeners = make([]*Network_Listener,0)
@@ -58,6 +76,8 @@ func STATE_Get_Network() (*Network) {
 	netstat_map := exec.Command("netstat","-nlp","-4","-6")
 	output_map, _ := netstat_map.Output()
 
+	S.Network_Map = STATE_Get_Network_Map()
+
 	for k,v := range strings.Split(string(output_map), "\n" ) {
 		if k == 0 || len(v) == 0 {
 			continue
@@ -69,8 +89,25 @@ func STATE_Get_Network() (*Network) {
 			continue
 		}
 
+
 		proto := fields[0]
 		listen := fields[3]
+
+		arr := strings.Split(listen, ":")
+		if len(arr) != 0 {
+			port_str := arr[len(arr)-1]
+			port, err := strconv.Atoi(port_str)
+			if err != nil {
+				continue
+			}
+			if _,ok := S.Network_Map.Sockets[port]; !ok {
+				if _,ok2 := S.Network_Map.Sockets[port][proto]; !ok2 {
+					S.Network_Map.Sockets[port] = make(map[string]bool)
+					S.Network_Map.Sockets[port][proto] = true
+				}
+			}
+		}
+
 
 		idx := 0
 		switch len(fields) {
@@ -99,7 +136,6 @@ func STATE_Get_Network() (*Network) {
 		Debug("Get_Network:NL:%q\n", NL)
 	}
 
-	Debug("---------------------------------------------------\n%q----------------------------------\n", N)
 	return N
 }
 

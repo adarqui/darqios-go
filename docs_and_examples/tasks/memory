@@ -1,0 +1,9 @@
+MEMORY:
+
+	Verify that system memory falls within safe limits.
+
+	idx: free
+
+	thresholds: [ "low", "med", "high" ]
+
+	If percent-free-memory falls below {thresholds}, fire off alert

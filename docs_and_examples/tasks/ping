@@ -1,0 +1,16 @@
+PING:
+
+	idx: alive
+
+
+alive:
+
+	params: [ "ip1", "ip2", ... "ipN" ]
+
+		Will try and png each of the ip's specified
+
+	thresholds: [ "time1", "time2", "timeN" ]
+
+		Will place a time constraint on failed ping's.
+
+		If pingN has failed for timeN seconds, fire off a low, medium, or high alert

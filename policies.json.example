@@ -169,6 +169,30 @@
 			"thresholds" : [ "120", "300", "600" ],
 			"mitigate" : [],
 			"active" : true
+		},
+		{
+			"name" : "Network",
+			"desc" : "Notify when elastic is not listening",
+			"hosts" : [],
+			"groups" : [ "elastic" ],
+			"idx" : "port_any",
+			"interval" : 10,
+			"params" : [ "9200" ],
+			"thresholds" : [],
+			"mitigate" : [ "restart_elastic.sh" ],
+			"active" : true
+		},
+		{
+			"name" : "Network",
+			"desc" : "This server should never send or receive Blah bytes per second",
+			"hosts" : [],
+			"groups" : "test_bandwidth",
+			"idx" : "bandwidth_any",
+			"interval" : 10,
+			"params" : [],
+			"thresholds" : [ "100000", "1000000", "10000000" ],
+			"mitigate" : [],
+			"active" : true
 		}
 	],
 	"missing" : [

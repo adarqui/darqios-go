@@ -89,7 +89,7 @@ func Task_Compare_Numbers(Thresholds []string, Actual float64, Which byte) (stri
 
 
 
-func Tasks_Alert_Level_From_Idx(P *Policy) (string) {
+func Task_Get_Alert_Level(P *Policy) (string) {
 
 	/*
 	arr := strings.Split(P.Idx, ":")

@@ -19,23 +19,33 @@ type MON struct {
 /*
  * This generates a "MON" Object which is sent up to the monitor channel for relay to the server
  */
-func MON_Gen_Task(Type string, Policy *Policy, Subject string, Body string) (*MON) {
+func (S *State) MON_Gen_Task(Type string, Actual string, Policy *Policy, Subject string, Body string) (*MON) {
 	mon := new(MON)
 
 	mon.Op = MON_REQ_TASK
-	mon.Data = MON_Gen_Task_Raw(Type, Policy, Subject, Body)
+	task := MON_Gen_Task_Raw(Type, Actual, Policy, Subject, Body)
+	mon.Data = task
 
 	Debug("MON_Gen_Task:MON_REQ_TASK:%q\n", mon)
+
+	/*
+	 * Mitigation entry point
+	 */
+	TD := new(Task_Data)
+	TD.State = S
+	TD.Policy = Policy
+	TD.MG8_Launch(task)
 
 	return mon
 }
 
-func MON_Gen_Task_Raw(Type string, Policy *Policy, Subject string, Body string) (*Task) {
+func MON_Gen_Task_Raw(Type string, Actual string, Policy *Policy, Subject string, Body string) (*Task) {
 
 	task := new(Task)
 	task.Type = Type
 	task.Name = Policy.Name
 	task.Idx = Policy.Idx
+	task.Actual = Actual
 	task.Subject = fmt.Sprintf("DARQIOS: %s:%s - (%s) - %s", Policy.Name, Policy.Idx, Type, Subject)
 	task.Body = Body
 	task.Time = time.Now()

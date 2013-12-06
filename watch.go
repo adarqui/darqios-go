@@ -45,7 +45,7 @@ func (M *Main) WATCH_Notify(Msg *MPLX, A *Account, Time_Diff time.Duration) {
 	P.Name = "Missing"
 
 	P.Idx = "lost"
-	task := MON_Gen_Task_Raw("high", &P, fmt.Sprintf("%s hasn't checked in for the last %s seconds", A.Host, Time_Diff), "Bleh")
+	task := MON_Gen_Task_Raw("high", A.Host, &P, fmt.Sprintf("%s hasn't checked in for the last %s seconds", A.Host, Time_Diff), "Bleh")
 
 	Msg.Op = MPLX_REQ_MISSING
 	Msg.Arg = A.Host

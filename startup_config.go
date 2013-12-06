@@ -17,11 +17,13 @@ type Server_Config struct {
 	Policies string
 	Daemonize bool
 	Watcher time.Duration
+	Base string
 }
 
 type Client_Config struct {
 	Host string
 	Daemonize bool
+	Base string
 }
 
 type Mongo_Config struct {
@@ -65,9 +67,19 @@ func (M *Main) SC_Init() {
 	if M.Startup_Config.Shared.Debug == true {
 		DEBUG = true
 	}
+
 	if M.Startup_Config.Server.Watcher <= 0 {
 		M.Startup_Config.Server.Watcher = 30
 	}
+
+	if M.Startup_Config.Server.Base == "" {
+		M.Startup_Config.Server.Base = "/etc/darqios"
+	}
+
+	if M.Startup_Config.Client.Base == "" {
+		M.Startup_Config.Client.Base = "."
+	}
+
 	Debug("startup_config:%q\n", M.Startup_Config)
 	return
 }
