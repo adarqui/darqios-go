@@ -11,6 +11,7 @@ func Task_Process(M *Main, S *State, TD *Task_Data) (bool) {
 		case "check" : return Task_Process_Check(M, S, TD)
 		case "running" : return Task_Process_Running(M, S, TD)
 		case "!running" : return Task_Process_Not_Running(M, S, TD)
+		case "!running_single": return Task_Process_Not_Running_Single(M, S, TD)
 		default : return false
 	}
 }
@@ -40,9 +41,17 @@ func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 }
 
 
+func Task_Process_Not_Running(M * Main, S *State, TD *Task_Data) (bool) {
+	return Task_Process_Not_Running_Generic(M, S, TD, false)
+}
 
 
-func Task_Process_Not_Running(M *Main, S *State, TD *Task_Data) (bool) {
+func Task_Process_Not_Running_Single(M * Main, S *State, TD *Task_Data) (bool) {
+	return Task_Process_Not_Running_Generic(M, S, TD, true)
+}
+
+
+func Task_Process_Not_Running_Generic(M *Main, S *State, TD *Task_Data, Single bool) (bool) {
 
 	found := false
 
@@ -59,6 +68,11 @@ func Task_Process_Not_Running(M *Main, S *State, TD *Task_Data) (bool) {
 		if found == false {
 			mon := S.MON_Gen_Task(alert_level, check_process, TD.Policy, fmt.Sprintf("%s is not running", check_process), "None")
 			M.M<-mon
+
+			if Single == true {
+				/* When set, only fire off one Gen_Task.. for example, when multiple processes being down can trigger one and only one restart script. */
+				return found
+			}
 		}
 	}
 

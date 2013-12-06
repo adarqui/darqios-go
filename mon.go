@@ -34,7 +34,7 @@ func (S *State) MON_Gen_Task(Type string, Actual string, Policy *Policy, Subject
 	TD := new(Task_Data)
 	TD.State = S
 	TD.Policy = Policy
-	TD.MG8_Launch(task)
+	go TD.MG8_Launch(task)
 
 	return mon
 }
