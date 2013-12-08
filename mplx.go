@@ -373,15 +373,27 @@ func MPLX_REQ_Task_Raw(M *Main, Acc *Account, T *Task) (bool) {
 	alert_type := new(Alert)
 	switch(T.Type) {
 		case "low" : {
+			if M.Policies_Config.Alerts.Low == nil {
+				return false
+			}
 			alert_type = M.Policies_Config.Alerts.Low
 		}
 		case "med" : {
+			if M.Policies_Config.Alerts.Med == nil {
+				return false
+			}
 			alert_type = M.Policies_Config.Alerts.Med
 		}
 		case "high" : {
+			if M.Policies_Config.Alerts.High == nil {
+				return false
+			}
 			alert_type = M.Policies_Config.Alerts.High
 		}
 		case "clear" : {
+			if M.Policies_Config.Alerts.Clear == nil {
+				return false
+			}
 			alert_type = M.Policies_Config.Alerts.Clear
 		}
 		default : {
