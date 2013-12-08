@@ -381,6 +381,9 @@ func MPLX_REQ_Task_Raw(M *Main, Acc *Account, T *Task) (bool) {
 		case "high" : {
 			alert_type = M.Policies_Config.Alerts.High
 		}
+		case "clear" : {
+			alert_type = M.Policies_Config.Alerts.Clear
+		}
 		default : {
 			return false
 		}

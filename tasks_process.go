@@ -34,6 +34,15 @@ func Task_Process_Running(M *Main, S * State, TD *Task_Data) (bool) {
 		if found == true {
 			mon := S.MON_Gen_Task(alert_level, check_process, TD.Policy, fmt.Sprintf("%s is running", check_process),  "None.")
 			M.M<-mon
+		} else {
+			/*
+			truth := S.STATE_Hash_Exists(TD.Policy.Name, TD.Policy.Idx, check_process)
+			if truth == true {
+				S.STATE_Hash_Clear(TD.Policy.Name, TD.Policy.Idx, check_process, TD.Policy)
+			}
+			*/
+
+			S.STATE_Hash_All_Clear(TD, check_process)
 		}
 	}
 
@@ -77,11 +86,15 @@ func Task_Process_Not_Running_Generic(M *Main, S *State, TD *Task_Data, Single b
 			/*
 			 * Here's where it gets tricky... We need to notify users of a cleared alert
 			 */
+
+			 /*
 			truth := S.STATE_Hash_Exists(TD.Policy.Name, TD.Policy.Idx, check_process)
 			if truth == true {
-				/* This means we've had an alert, that is now clear, so notify */
+				// This means we've had an alert, that is now clear, so notify
 				S.STATE_Hash_Clear(TD.Policy.Name, TD.Policy.Idx, check_process, TD.Policy)
 			}
+			*/
+			S.STATE_Hash_All_Clear(TD, check_process)
 
 		}
 	}

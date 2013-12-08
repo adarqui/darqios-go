@@ -24,6 +24,9 @@ func Task_Load_Generic(M *Main, S *State, TD *Task_Data, Load float64) (bool) {
 	result, result_from_threshold := Task_Compare_Numbers(TD.Policy.Thresholds, Load, '>')
 
 	if result == "" {
+
+		S.STATE_Hash_All_Clear(TD, fmt.Sprintf("%f", Load))
+
 		return false
 	}
 

@@ -78,7 +78,7 @@
 			"interval" : 60,
 			"params" : [ "/" ],
 			"thresholds" : [ "", "", "90" ],
-			"mitigate" : [ "", "", "disk/clean.sh" ],
+			"mitigate" : [ "", "", "disk_free.sh" ],
 			"active" : true
 		},
 		{
@@ -89,7 +89,7 @@
 			"idx" : "free",
 			"params" : [ "/ebs" ],
 			"thresholds" : [ "", "", "90" ],
-			"mitigate" : [ "", "", "disk/clean.sh" ],
+			"mitigate" : [ "", "", "disk_free.sh" ],
 			"active" : true
 		},
 		{
@@ -159,6 +159,19 @@
 		},
 		{
 			"name" : "Process",
+			"desc" : "HA Proxy",
+			"hosts" : [],
+			"groups" : [ "haproxy" ],
+			"idx" : "!running_single",
+			"interval" : 10,
+			"level" : "high",
+			"params" : [ "haproxy" ],
+			"thresholds" : [],
+			"mitigate" : [ "haproxy_restart.sh" ],
+			"active" : true
+		},
+		{
+			"name" : "Process",
 			"desc" : "Notify us when these services are running",
 			"hosts" : [ "" ],
 			"groups" : [],
@@ -191,6 +204,17 @@
 			"interval" : 10,
 			"params" : [],
 			"thresholds" : [ "100000", "1000000", "10000000" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Network",
+			"desc" : "Connections should not exceed these values",
+			"hosts" : [],
+			"groups" : "test_network_connections",
+			"idx" : "connections",
+			"params" : [],
+			"thresholds" : [ "1000", "10000", "100000" ],
 			"mitigate" : [],
 			"active" : true
 		}
@@ -231,6 +255,9 @@
 		},
 		"high" : {
 			"scripts" : [ "high.sh" ]
+		},
+		"clear" : {
+			"scripts" : [ "clear.sh" ]
 		}
 	}
 }

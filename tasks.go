@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"errors"
 )
 
 type Task_Data struct {
@@ -105,4 +106,15 @@ func Task_Get_Alert_Level(P *Policy) (string) {
 		return P.Level
 	}
 	return "high"
+}
+
+
+
+func Task_Alert_2_Index(Type string) (int, error) {
+	switch Type {
+		case "low": return 0, nil
+		case "med" : return 1, nil
+		case "high": return 2, nil
+		default: return 0, errors.New("invalid")
+	}
 }

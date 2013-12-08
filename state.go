@@ -324,7 +324,7 @@ func (S *State) STATE_Hash_Clear(Policy_Name string, Policy_Idx string, Policy_A
 
 		mon := new(MON)
 		mon.Op = MON_REQ_TASK
-		task := MON_Gen_Task_Raw("low", Policy_Actual, P, fmt.Sprintf("%s is no longer an issue", Policy_Actual), "None")
+		task := MON_Gen_Task_Raw("clear", Policy_Actual, P, fmt.Sprintf("%s is no longer an issue", Policy_Actual), "None")
 		mon.Data = task
 		S.M.M<-mon
 	}
@@ -340,4 +340,12 @@ func (S *State) STATE_Hash_Add(Policy_Name string, Policy_Idx string, Policy_Act
 	}
 
 	return false
+}
+
+
+func (S *State) STATE_Hash_All_Clear(TD *Task_Data, Actual string) {
+	truth := S.STATE_Hash_Exists(TD.Policy.Name, TD.Policy.Idx, Actual)
+	if truth == true {
+		S.STATE_Hash_Clear(TD.Policy.Name, TD.Policy.Idx, Actual, TD.Policy)
+	}
 }

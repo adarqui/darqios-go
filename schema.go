@@ -86,6 +86,7 @@ type Alerts struct {
 	Low *Alert
 	Med *Alert
 	High *Alert
+	Clear *Alert
 }
 
 type Policies_Config struct {

@@ -17,18 +17,28 @@ func Task_Ping(M *Main, S *State, TD *Task_Data) (bool) {
 		return false
 	}
 
+	truth := false
 	found := false
 
 	for _,param := range TD.Policy.Params {
 		Debug("PINGING: %v\n", param)
-		truth := PING_Ipv4(param, 1)
+		truth = false
+		for i := 0; i < 3; i++ {
+			truth = PING_Ipv4(param, 1)
+			if truth == true {
+				break
+			}
+		}
 
 		if truth == false {
 			found = true
 			mon := S.MON_Gen_Task("high", param, TD.Policy, fmt.Sprintf("Unable to ping %s", param), "None.")
 
 			M.M<-mon
+		} else {
+			S.STATE_Hash_All_Clear(TD, param)
 		}
+
 	}
 
 	return found
