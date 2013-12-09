@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 	"crypto/tls"
 	"crypto/rand"
 	"crypto/x509"
@@ -114,7 +115,15 @@ func (M *Main) NET_Server_Handle_Client(Conn net.Conn) {
 
 	DebugLn("NET_Server_Handle_Client:Authenticated!")
 
-	account.Ip = fmt.Sprintf("%s", Conn.RemoteAddr())
+
+	/* Get rid of ip:port */
+	ip_arr := strings.Split(fmt.Sprintf("%s", Conn.RemoteAddr()), ":")
+	if len(ip_arr) != 2 {
+		authenticated = false
+		return
+	}
+
+	account.Ip = ip_arr[0]
 
 	Debug("NET_Server_Handle_Client:IP=%v\n",account.Ip)
 
