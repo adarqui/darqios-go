@@ -75,6 +75,34 @@ func (M *Main) MG_Setup_Schema() {
 	if err != nil {
 		log.Fatal("Setup_Schema:Policies:EnsureIndex", err)
 	}
+
+	state := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("state")
+	state_Index := mgo.Index{
+		Key: []string{"host", "ts"},
+		Unique: false,
+		DropDups : false,
+		Background: true,
+		Sparse: true,
+	}
+
+	err = state.EnsureIndex(state_Index)
+	if err != nil {
+		log.Fatal("Setup_Schema:State:EnsureIndex", err)
+	}
+
+	alerts := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("alerts")
+	alerts_Index := mgo.Index{
+		Key: []string{"host", "ts"},
+		Unique : false,
+		DropDups : false,
+		Background : true,
+		Sparse : true,
+	}
+
+	err = alerts.EnsureIndex(alerts_Index)
+	if err != nil {
+		log.Fatal("Setup_Schema:Alerts:EnsureIndex", err)
+	}
 }
 
 
@@ -124,6 +152,7 @@ func (M *Main) MG_Insert_Task(A *Account, T *Task) {
 	alert_entry := new(Alert_Entry)
 	alert_entry.Host = A.Host
 	alert_entry.Ip = A.Ip
+	alert_entry.Ts = time.Now()
 	alert_entry.Task = T
 
 	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("alerts")
@@ -135,6 +164,8 @@ func (M *Main) MG_Insert_Task(A *Account, T *Task) {
 
 
 func (M *Main) MG_Update_Account_State(A *Account, S *State_Report) (bool,error) {
+
+	S.Host = A.Host
 
 	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("accounts")
 	err := c.Update(bson.M{"hash":A.Hash},bson.M{"$set":bson.M{"state":S}})
@@ -195,6 +226,13 @@ func (M *Main) MG_Accounts_Find_Field(Field interface{}) ([]Account, error) {
 	return accounts,err
 }
 
+
+func (M *Main) MG_Query(Hosts []string, Groups []string) ([]Account, error) {
+	var accounts []Account
+
+
+	return accounts, nil
+}
 
 func (M *Main) MG_Accounts(Hosts []string, Groups []string) ([]Account, error) {
 	var accounts []Account

@@ -64,3 +64,8 @@ db.state.find().sort({_id:-1}).limit(50)
 db.state.find({ $query: { "host": "certs" }, $orderby : {"_id":-1}})
 
 db.accounts.update({host:"certs"},{ $set:{groups:["nginx","redis","elastic","php5fpm","staging","production","test_bandwidth","mongo","aspera"]}})
+
+db.alerts.find({ts:{$lt:ISODate()}}).pretty()
+db.alerts.find({ts:{$lt:ISODate()}}).limit(50).pretty()
+db.alerts.find({host:"certs",ts:{$lt:ISODate()}}).limit(50).pretty()
+

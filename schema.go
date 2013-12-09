@@ -24,6 +24,7 @@ type Alert_Entry struct {
 	Host string
 	Ip string
 	Task *Task
+	Ts time.Time
 }
 
 type Task struct {
