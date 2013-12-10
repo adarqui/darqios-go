@@ -227,9 +227,50 @@ func (M *Main) MG_Accounts_Find_Field(Field interface{}) ([]Account, error) {
 }
 
 
-func (M *Main) MG_Query(Hosts []string, Groups []string) ([]Account, error) {
+func (M *Main) MG_Query(Type string, Hosts []string, Groups []string, Ts_Start string, Ts_End string, Limit string, Filter string) (interface{}, error) {
+
+	/*
+	 * Generic query routine
+	 *
+	 * FIXME - support groups
+	 */
 	var accounts []Account
 
+	ts_start, err := XTIME_Get(Ts_Start)
+	if err != nil {
+		return nil, err
+	}
+
+	ts_end, err := XTIME_Get(Ts_End)
+	if err != nil {
+		return nil, err
+	}
+
+	limit, err := LIMIT_Get(Limit)
+	if err != nil {
+		return nil, err
+	}
+
+	Debug("%q %q\n", ts_start, ts_end)
+
+	bson_hosts := bson.M{"host":bson.M{"$in":Hosts}}
+	bson_time := bson.M{"$gt":ts_start, "$lt":ts_end}
+//	q := []bson.M{}
+	q := bson.M{}
+
+	if len(Hosts) != 0 {
+		q = bson.M{"host":bson.M{"$in":Hosts},"ts":bson.M{"$gt":ts_start, "$lt":ts_end}}
+	} else {
+		q = bson_time
+	}
+
+	Debug("%q\n", bson_hosts)
+
+	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("state")
+	err = c.Find(q).Limit(limit).All(&accounts)
+	if err != nil {
+		return nil, err
+	}
 
 	return accounts, nil
 }

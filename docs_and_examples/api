@@ -60,6 +60,13 @@ ACTUAL:
 - 		curl ip:911/policies/name
 
 
+/query
+
+	curl http://127.0.0.1:911/query/state/certs:certs/nil/2013-12-09T01:53:58/2013-12-09T02:53:58/-1/nil
+	curl http://127.0.0.1:911/query/state/certs:certs/nil/2013-12-09T01:53:58/now/-1/nil
+	curl http://127.0.0.1:911/query/state/certs:certs/nil/-600/now/-1/nil
+	curl http://127.0.0.1:911/query/state/certs:certs/nil/0/now/-1/nil
+
 
 
 SPECIAL URLS:
@@ -79,6 +86,9 @@ SPECIAL URLS:
 		http://ip:911/pub/spystate.html#state:Data.Proc
 		http://ip:911/pub/spystate.html#state:Data.Disks.Map.Bandwidth
 		http://ip:911/pub/spystate.html#state:Data.Network.Connections
+
+
+
 
 
 

@@ -68,4 +68,6 @@ db.accounts.update({host:"certs"},{ $set:{groups:["nginx","redis","elastic","php
 db.alerts.find({ts:{$lt:ISODate()}}).pretty()
 db.alerts.find({ts:{$lt:ISODate()}}).limit(50).pretty()
 db.alerts.find({host:"certs",ts:{$lt:ISODate()}}).limit(50).pretty()
-
+db.alerts.find({host:"certs",ts:{$lt:ISODate()}}).limit(1).pretty()
+db.state.find({host:"certs",ts:{$lt:ISODate()}}).limit(1).pretty()
+db.state.find({host:"certs",ts:{$lt:ISODate(),$gt:ISODate("2013-12-09T01:53:58.885Z")}}).limit(1).pretty()

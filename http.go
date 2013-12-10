@@ -81,6 +81,7 @@ func (M *Main) HTTP_Routes() {
 	M.HTTP_Accounts_Init()
 	M.HTTP_Sessions_Init()
 	M.HTTP_State_Init()
+	M.HTTP_Query_Init()
 	M.HTTP_Help_Init()
 
 }
