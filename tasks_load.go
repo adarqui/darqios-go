@@ -25,7 +25,7 @@ func Task_Load_Generic(M *Main, S *State, TD *Task_Data, Load float64) (bool) {
 
 	if result == "" {
 
-		S.STATE_Hash_All_Clear(TD, fmt.Sprintf("%f", Load))
+		S.STATE_Hash_All_Clear(TD, "load"))
 
 		return false
 	}
