@@ -48,10 +48,17 @@ type State_Report_Memory struct {
 
 type State_Report_Proc struct {
 	Total int
-	Running int
-	Stopped int
-	Zombie int
+	ByMem map[string]float64
+	ByCpu map[string]float64
 }
+
+/*
+ * For sorting
+ */
+type Proc_ByCpu []Process
+type Proc_ByMem []Process
+
+
 
 type XInterface struct {
 	Name string
@@ -131,6 +138,7 @@ type Process struct {
 
 type Processes struct {
 	Map map[int]Process
+	Array []Process
 }
 
 
@@ -217,12 +225,40 @@ func (S *State) STATE_Get() {
 
 
 
+func (p Proc_ByCpu) Len() (int) {
+	return len(p)
+}
+
+func (p Proc_ByCpu) Swap(a, b int) {
+	p[a], p[b] = p[b], p[a]
+}
+
+func (p Proc_ByCpu) Less(a, b int) (bool) {
+	return p[a].Pcpu > p[b].Pcpu
+}
+
+
+func (p Proc_ByMem) Len() (int) {
+	return len(p)
+}
+
+func (p Proc_ByMem) Swap(a, b int) {
+	p[a], p[b] = p[b], p[a]
+}
+
+func (p Proc_ByMem) Less(a, b int) (bool) {
+	return p[a].Pmem > p[b].Pmem
+}
+
+
 func STATE_Get_Processes() (*Processes) {
 
 	var err error
 	P := new(Processes)
 
 	P.Map = make(map[int]Process)
+	/* Not sure what to do here, we need an array for sorting */
+	P.Array = make([]Process, 0)
 
 	ps := exec.Command("ps", "-e", "-opid,comm,ppid,pcpu,pmem")
 	output, _ := ps.Output()
@@ -251,8 +287,9 @@ func STATE_Get_Processes() (*Processes) {
 			continue
 		}
 		P.Map[proc.Pid] = *proc
-//		log.Printf("%q %q\n", fields, k, v)
-//		log.Printf("%q\n", proc)
+
+
+		P.Array = append(P.Array, *proc)
 	}
 
 	return P

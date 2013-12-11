@@ -7,3 +7,5 @@ segfault/process killed/kernel oops checker -> hash dmesg
 move "alert level" for some of those policies, that's grabbed from thresholds[], to idx: "!running:high"
 
 an all clear alert, for when a server goes from missing to found
+
+listeners, map indexed by proto:port?

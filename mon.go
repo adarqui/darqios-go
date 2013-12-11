@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 	"fmt"
+	"sort"
 )
 
 const (
@@ -99,6 +100,48 @@ func MON_Gen_State_Raw(State *State) (*State_Report) {
 //	state_report.Interfaces = State.Interfaces
 
 	state_report.Ts = time.Now()
+
+
+	/*
+	 * Generate two map's of processes sorted by : Highest cpu, Highest mem
+	 */
+
+	state_report.Proc.ByCpu = make(map[string]float64)
+	state_report.Proc.ByMem = make(map[string]float64)
+
+	j := 0
+	sort.Sort(Proc_ByCpu(State.Processes.Array))
+	for _,elm := range State.Processes.Array {
+		if val,ok := state_report.Proc.ByCpu[elm.Comm]; ok {
+			val = val + elm.Pcpu
+			state_report.Proc.ByCpu[elm.Comm] = val
+		} else {
+			j += 1
+			state_report.Proc.ByCpu[elm.Comm] = elm.Pcpu
+		}
+
+		if j > 5 {
+			break
+		}
+	}
+
+
+	j = 0
+	sort.Sort(Proc_ByMem(State.Processes.Array))
+	for _, elm := range State.Processes.Array {
+		if val,ok := state_report.Proc.ByMem[elm.Comm]; ok {
+			val = val + elm.Pmem
+			state_report.Proc.ByMem[elm.Comm] = val
+		} else {
+			j += 1
+			state_report.Proc.ByMem[elm.Comm] = elm.Pmem
+		}
+
+		if j > 5 {
+			break
+		}
+	}
+
 
 	return state_report
 }
