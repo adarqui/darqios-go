@@ -22,7 +22,7 @@ func Task_Memory_Free(M *Main, S *State, TD *Task_Data) (bool) {
 
 	if result == "" {
 
-		S.STATE_Hash_All_Clear(TD, "free"))
+		S.STATE_Hash_All_Clear(TD, "free")
 
 		return false
 	}
