@@ -102,6 +102,11 @@ func HTTP_Filter(c context.Context, path string) ([]string, error) {
 	if list == "" {
 		return nil, nil
 	}
+
+	if list == "nil" {
+		return []string{}, nil
+	}
+
 	list_array := strings.Split(string(list),":")
 
 	return list_array, nil
