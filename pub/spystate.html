@@ -36,7 +36,7 @@
 
 
 			var help = function() {
-				$.getJSON("/accounts/get/", function(data,err) {
+				$.getJSON("/accounts/get/certs", function(data,err) {
 						var state = data[0].State
 						var traverse = function(obj,path,master) {
 							var arr = _.keys(obj)

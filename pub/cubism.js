@@ -1,6 +1,59 @@
+/*
+ * jank-flaccid cubism graph
+ * route: /pub/cubism.html#min,max,step,size,hosts:hostsN,Filter
+ */
+
+$(document).ready(function() {
+
+var app;
+var hosts = [];
+var opts = {};
+
+var scripts = function(cb) {
+	$('body').append('<script src="js/cubism.v1.js"></script>');
+	cb();
+}
+
+var parse_hash = function() {
+	var hash = window.location.hash.replace(/#/g,'');
+	var arr = hash.split(',');
+	if (arr.length < 6) {
+		return false
+	}
+
+	opts.min = parseInt(arr[0],10);
+	opts.max = parseInt(arr[1],10);
+	opts.step = parseInt(arr[2],10);
+	opts.size = parseInt(arr[3],10);
+	opts.hosts = arr[4];
+	opts.filter = arr[5];
+
+	return true
+}
+
+var init = function() {
+
+	truth = parse_hash();
+	if (truth == false) {
+		return
+	}
+
+	document.title = opts.filter
+
+	app = new quickApp();
+	app.Routes.Accounts_List(function(err,data) {
+		console.log(data)
+		hosts = data.Accounts;
+		init_d3();
+	});
+
+
+}
+
+var init_d3 = function() {
 var context = cubism.context()
-    .step(1e4)
-    .size(1440);
+	.step(opts.step)
+	.size(opts.size)
 
 d3.select("body").selectAll(".axis")
     .data(["top", "bottom"])
@@ -13,31 +66,61 @@ d3.select("body").append("div")
     .call(context.rule());
 
 d3.select("body").selectAll(".horizon")
-    .data(d3.range(1, 50).map(random))
+	.data(hosts.map(get_state3))
+
   .enter().insert("div", ".bottom")
     .attr("class", "horizon")
-    .call(context.horizon().extent([-10, 10]));
+	.call(context.horizon().extent([opts.min, opts.max]));
 
 context.on("focus", function(i) {
   d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
 });
 
-// Replace this with context.graphite and graphite.metric!
-function random(x) {
-  var value = 0,
-      values = [],
-      i = 0,
-      last;
-  return context.metric(function(start, stop, step, callback) {
-    start = +start, stop = +stop;
-    if (isNaN(last)) last = start;
-    while (last < stop) {
-      last += step;
-      value = Math.max(-10, Math.min(10, value + .8 * Math.random() - .4 + .2 * Math.cos(i += x * .02)));
-	  value = 1
-      values.push(value);
-    }
-	console.log("Values", values, "start", start, "stop", stop)
-    callback(null, values = values.slice((start - stop) / step));
-  }, x);
+
+function pad(n) {
+	return (n < 10 ? '0'+n : n)
 }
+
+function get_date(d) {
+	var xd = new Date(d)
+	return xd.getUTCFullYear() + "-" + (pad(xd.getUTCMonth()+1)) + "-" + (pad(xd.getUTCDate())) + "T" + (pad(xd.getUTCHours())) + ":" + (pad(xd.getUTCMinutes())) + ":" + (pad(xd.getUTCSeconds()))
+}
+
+
+function get_state3(x) {
+
+	var value = 0,
+	values = [],
+	i = 0,
+	last;
+
+	return context.metric(function(start,stop,step,callback) {
+		var dStart = get_date(start)
+		var dStop = get_date(stop)
+		d3.json("/query/state/"+x+"/nil/"+dStart+"/"+dStop+"/-1/"+opts.filter, function(data) {
+			start = +start, stop = +stop;
+			if (isNaN(last)) last = start;
+			while (last < stop) {
+				last += step;
+//				values.push(value);
+			}
+			var res = []
+			try {
+				for(var v in data.Arr) {
+					var datum = data.Arr[v]
+					res.push(datum.Data)
+				}
+			} catch(err) {
+			}
+	callback(null, res);
+	});
+	}, x);
+}
+
+
+}
+
+
+scripts(init);
+
+});

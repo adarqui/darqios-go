@@ -19,6 +19,19 @@ var quickApp = function(opts) {
 		}
 	}
 
+	APP.Routes = {
+		Accounts_List : function(cb) {
+			$.getJSON("/accounts:list", function(data,err) {
+				cb(err,data);
+			});
+		},
+		Query_Recent : function(x,cb) {
+			$.getJSON("/query/state/"+x+"/nil/-6/now/-1/nil", function(data, err) {
+				cb(err,data);
+			});
+		}
+	}
+
 	APP.WS_Init = function() {
 
 		console.log("quickApp: WS_Init: Connecting");
