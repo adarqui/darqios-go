@@ -234,7 +234,7 @@ func (M *Main) MG_Query(Type string, Hosts []string, Groups []string, Ts_Start s
 	 *
 	 * FIXME - support groups
 	 */
-	var accounts []Account
+	var accounts []State_Report
 
 	ts_start, err := XTIME_Get(Ts_Start)
 	if err != nil {
@@ -251,20 +251,20 @@ func (M *Main) MG_Query(Type string, Hosts []string, Groups []string, Ts_Start s
 		return nil, err
 	}
 
-	Debug("%q %q\n", ts_start, ts_end)
+//	Debug("%q %q\n", ts_start, ts_end)
 
-	bson_hosts := bson.M{"host":bson.M{"$in":Hosts}}
-	bson_time := bson.M{"$gt":ts_start, "$lt":ts_end}
+//	bson_hosts := bson.M{"host":bson.M{"$in":Hosts}}
+//	bson_time := bson.M{"$gt":ts_start, "$lt":ts_end}
 //	q := []bson.M{}
 	q := bson.M{}
 
 	if len(Hosts) != 0 {
 		q = bson.M{"host":bson.M{"$in":Hosts},"ts":bson.M{"$gt":ts_start, "$lt":ts_end}}
 	} else {
-		q = bson_time
+		q = bson.M{"ts":bson.M{"$gt":ts_start, "$lt":ts_end}}
 	}
 
-	Debug("%q\n", bson_hosts)
+//	Debug("%q\n", bson_hosts)
 
 	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("state")
 	err = c.Find(q).Limit(limit).All(&accounts)

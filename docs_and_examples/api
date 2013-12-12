@@ -62,11 +62,16 @@ ACTUAL:
 
 /query
 
-	curl http://127.0.0.1:911/query/state/certs:certs/nil/2013-12-09T01:53:58/2013-12-09T02:53:58/-1/nil
-	curl http://127.0.0.1:911/query/state/certs:certs/nil/2013-12-09T01:53:58/now/-1/nil
-	curl http://127.0.0.1:911/query/state/certs:certs/nil/-600/now/-1/nil
-	curl http://127.0.0.1:911/query/state/certs:certs/nil/0/now/-1/nil
+	curl http://ip:911/query/state/certs:certs/nil/2013-12-09T01:53:58/2013-12-09T02:53:58/-1/nil
+	curl http://ip:911/query/state/certs:certs/nil/2013-12-09T01:53:58/now/-1/nil
+	curl http://ip:911/query/state/certs:certs/nil/-600/now/-1/nil
+	curl http://ip:911/query/state/certs:certs/nil/0/now/-1/nil
+	curl http://ip:911/query/state/nil/nil/-10/now/-1/nil <- grab any hosts or groups, using a time interval of -10s until now()
 
+	http://ip:911/pub/cubism.html#0,10,10000,1400,nil,LoadAvg:last1min
+	http://ip:911/pub/cubism.html#0,100,10000,1400,nil,Memory:Free:
+	http://ip:911/pub/cubism.html#0,200,10000,1400,nil,Process:Total
+	http://ip:911/pub/cubism.html#0,100,10000,3000,nil,Network:Connections
 
 
 SPECIAL URLS:

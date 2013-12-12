@@ -71,3 +71,10 @@ db.alerts.find({host:"certs",ts:{$lt:ISODate()}}).limit(50).pretty()
 db.alerts.find({host:"certs",ts:{$lt:ISODate()}}).limit(1).pretty()
 db.state.find({host:"certs",ts:{$lt:ISODate()}}).limit(1).pretty()
 db.state.find({host:"certs",ts:{$lt:ISODate(),$gt:ISODate("2013-12-09T01:53:58.885Z")}}).limit(1).pretty()
+
+// loop + update
+var cur = db.accounts.find();
+ cur.forEach(function(x) {
+  db.accounts.update({_id:x._id},{$set:{"groups":["web","redis","haproxy","php5fpm","aspera","elastic", "nginx", "staging", "production"]}})
+});
+.
