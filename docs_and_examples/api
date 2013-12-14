@@ -30,6 +30,7 @@ ACTUAL:
 	Add account:
 
 		curl http://127.0.0.1:911/accounts/add/m/g/a:a/true
+		curl http://ip:911/accounts/add/hash/host/groups/status
 
 	Missing
 

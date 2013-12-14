@@ -172,6 +172,32 @@
 		},
 		{
 			"name" : "Process",
+			"desc" : "Sleep 1000 , !pgrep test",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"idx" : "!running_pgrep",
+			"interval" : 10,
+			"level" : "high",
+			"params" : [ "sleep 1000" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Process",
+			"desc" : "Sleep 2000 , pgrep test",
+			"hosts" : [ "" ],
+			"groups" : [],
+			"idx" : "running_pgrep",
+			"interval" : 10,
+			"level" : "high",
+			"params" : [ "sleep 2000" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Process",
 			"desc" : "Notify us when these services are running",
 			"hosts" : [ "" ],
 			"groups" : [],
