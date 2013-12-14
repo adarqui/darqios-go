@@ -167,6 +167,8 @@ func (M *Main) MG_Update_Account_State(A *Account, S *State_Report) (bool,error)
 
 	S.Host = A.Host
 
+	S.STATE_Report_Sanitize()
+
 	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("accounts")
 	err := c.Update(bson.M{"hash":A.Hash},bson.M{"$set":bson.M{"state":S}})
 	if err != nil {
