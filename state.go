@@ -398,14 +398,14 @@ func (SR *State_Report) STATE_Report_Sanitize() {
 
 	for k, proc := range SR.Proc.ByMem {
 		p := strings.Replace(k, ".", "_", -1)
-		SR.Proc.ByMem[p] = proc
 		delete(SR.Proc.ByMem, k)
+		SR.Proc.ByMem[p] = proc
 	}
 
 	for k, proc := range SR.Proc.ByCpu {
 		p := strings.Replace(k, ".", "_", -1)
-		SR.Proc.ByCpu[p] = proc
 		delete(SR.Proc.ByCpu, k)
+		SR.Proc.ByCpu[p] = proc
 	}
 }
 
