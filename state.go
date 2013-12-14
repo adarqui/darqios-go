@@ -391,19 +391,21 @@ func (S *State) STATE_Hash_All_Clear(TD *Task_Data, Actual string) {
 
 func (SR *State_Report) STATE_Report_Sanitize() {
 	for k, intf := range SR.Interfaces.Map {
-		intf_sanitized := strings.Replace(k, ".", "__", -1)
-		if len(intf_sanitized) != len(k) {
-			SR.Interfaces.Map[intf_sanitized] = intf
-			delete(SR.Interfaces.Map, k)
-		}
+		intf_sanitized := strings.Replace(k, ".", "_", -1)
+		SR.Interfaces.Map[intf_sanitized] = intf
+		delete(SR.Interfaces.Map, k)
 	}
 
 	for k, proc := range SR.Proc.ByMem {
-		p := strings.Replace(k, ".", "__", -1)
-		if len(p) != len(k) {
-			SR.Proc.ByMem[p] = proc
-			delete(SR.Proc.ByMem, k)
-		}
+		p := strings.Replace(k, ".", "_", -1)
+		SR.Proc.ByMem[p] = proc
+		delete(SR.Proc.ByMem, k)
+	}
+
+	for k, proc := range SR.Proc.ByCpu {
+		p := strings.Replace(k, ".", "_", -1)
+		SR.Proc.ByCpu[p] = proc
+		delete(SR.Proc.ByCpu, k)
 	}
 }
 
