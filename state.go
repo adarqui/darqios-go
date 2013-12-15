@@ -148,7 +148,7 @@ type Disk struct {
 	Used uint64
 	Avail uint64
 	Mount string
-	Bandwidth uint64
+	Bandwidth int64
 	TS_Last time.Time
 }
 
