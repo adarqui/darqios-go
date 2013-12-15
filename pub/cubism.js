@@ -31,7 +31,7 @@ $(document).ready(function() {
 		opts.step = parseInt(arr[3],10);
 		opts.size = parseInt(arr[4],10);
 		opts.hosts = arr[5];
-		opts.filter = arr[6];
+		opts.filter = "b64="+btoa(arr[6]);
 		opts.colors = arr[7];
 
 		var colors = opts.colors.split(":")
