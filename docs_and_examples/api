@@ -109,6 +109,23 @@ http://ip:911/pub/cubism.html#state,0,20,5000,1000,nil,Users:Total,ffffff:ffffff
 - Total Network connections:
 http://ip:911/pub/cubism.html#state,0,100,5000,1000,nil,Network:Connections,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
 
+- Disks:
+
+	Disks:<disk mount path>:{Size,Used,Avail,Bandwidth}
+
+http://ip:911/pub/cubism.html#state,-20000,20000,5000,1000,nil,Disks:/:Bandwidth,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffff
+ff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00
+:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
+
+
+- Interfaces:
+
+	Interfaces:<interface name>:{TX,RX,BOTH}:{Bytes,Packets,Errors,Drops,Bandwidth}
+
+http://ip:911/pub/cubism.html#state,0,20000,5000,1000,nil,Interfaces:eth0:BOTH:Bandwidth,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
+
+
+
 
 
 
