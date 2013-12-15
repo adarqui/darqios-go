@@ -52,7 +52,7 @@ $(document).ready(function() {
 
 		document.title = opts.filter
 
-		opts.filter = "b64="+btoa(arr[6])
+		opts.filter = "b64="+btoa(opts.filter)
 
 		app = new quickApp();
 		app.Routes.Accounts_List(function(err,data) {
