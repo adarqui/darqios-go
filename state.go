@@ -390,10 +390,14 @@ func (S *State) STATE_Hash_All_Clear(TD *Task_Data, Actual string) {
 
 
 func (SR *State_Report) STATE_Report_Sanitize() {
+	/*
+	 * I hate this function so much.. but I can't have . or $ inside of a mongo key... debating on whether or not I should clean this up on the client rather than the server
+	 * euuugh..
+	 */
 	for k, intf := range SR.Interfaces.Map {
 		intf_sanitized := strings.Replace(k, ".", "_", -1)
-		SR.Interfaces.Map[intf_sanitized] = intf
 		delete(SR.Interfaces.Map, k)
+		SR.Interfaces.Map[intf_sanitized] = intf
 	}
 
 	for k, proc := range SR.Proc.ByMem {

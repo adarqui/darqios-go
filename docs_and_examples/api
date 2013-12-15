@@ -97,21 +97,17 @@ SPECIAL URLS:
 
 CUBISM EXAMPLES:
 
-http://ip:911/pub/cubism.html#state,0,20,5000,1000,nil,LoadAvg:last1min,ffffff:fff
-fff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffff
-ff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBB
-B:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00
-:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF000
-0
+- Load average in the last 1 minute:
+http://ip:911/pub/cubism.html#state,0,20,5000,1000,nil,LoadAvg:last1min,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
 
-http://ip:911/pub/cubism.html#state,0,300,5000,1000,nil,Process:Total,ffffff:fff
-fff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffff
-ff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBB
-B:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00
-:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF000
-0
+- Total processes:
+http://ip:911/pub/cubism.html#state,0,300,5000,1000,nil,Process:Total,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
 
+- Total users:
+http://ip:911/pub/cubism.html#state,0,20,5000,1000,nil,Users:Total,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
 
+- Total Network connections:
+http://ip:911/pub/cubism.html#state,0,100,5000,1000,nil,Network:Connections,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00:CCCC00:DDDD00:EEEE00:FFFF00J:BB5E00:CC6600m:DD6F00:EE7700:FF8000:BB0000:CC0000:DD0000:EE0000:FF0000
 
 
 
