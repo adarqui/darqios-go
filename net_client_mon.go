@@ -12,6 +12,7 @@ func (M *Main) NET_Client_MON() {
 		"Network" : Task_Network,
 		"Scheduler" : Task_Scheduler,
 		"State" : Task_State,
+		"Custom" : Task_Custom,
 	}
 
 	state := M.STATE_Init()

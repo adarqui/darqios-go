@@ -1,3 +1,7 @@
+/*
+ * This file needs to be refactored for sure...
+ */
+
 package main
 
 import (
@@ -104,6 +108,7 @@ func HTTP_Query_Filter(SP []State_Report, Filter string) (*Query_Generic, error)
 		case "Memory": return HTTP_Query_Filter_Memory(SP,paths)
 		case "Process": return HTTP_Query_Filter_Process(SP,paths)
 		case "Network": return HTTP_Query_Filter_Network(SP,paths)
+		case "Users": return HTTP_Query_Filter_Users(SP,paths)
 	}
 	return nil, nil
 }
@@ -196,5 +201,26 @@ func HTTP_Query_Filter_Network(SP []State_Report, Paths []string) (*Query_Generi
 		qg.Arr = append(qg.Arr, qd)
 	}
 
+	return qg, nil
+}
+
+
+func HTTP_Query_Filter_Users(SP []State_Report, Paths []string) (*Query_Generic, error) {
+	if len(Paths) < 2 {
+		return nil, errors.New("-EPARAM")
+	}
+
+	qg := new(Query_Generic)
+	qg.Arr = make([]Query_Datum,0)
+
+	for _, sp := range SP {
+		qd := Query_Datum{}
+		qd.Host = sp.Host
+		switch Paths[1] {
+			case "Total": qd.Data = sp.Users.Total
+			default: continue
+		}
+		qg.Arr = append(qg.Arr, qd)
+	}
 	return qg, nil
 }
