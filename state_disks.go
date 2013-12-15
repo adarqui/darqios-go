@@ -18,7 +18,11 @@ func (S * State) STATE_Disks_Bandwidth(D *Disk) {
 		time_diff := D.TS_Last.Sub(disk.TS_Last)
 		quot := uint64(time_diff/time.Second)
 		if quot != 0 {
-			D.Bandwidth = (D.Used - disk.Used) / quot
+			if D.Used >= disk.Used {
+				D.Bandwidth = (D.Used - disk.Used) / quot
+			} else {
+				D.Bandwidth = (disk.Used - D.Used) / quot
+			}
 		}
 
 	}
