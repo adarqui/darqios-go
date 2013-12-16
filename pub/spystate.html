@@ -19,7 +19,9 @@
 
 			var init = function() {
 
+				var static_fields = [ "Host" ]
 				var paths = arr[2].split(',')
+				paths = static_fields.concat(paths)
 
 				for (var v in paths) {
 					var path = paths[v];
@@ -38,7 +40,7 @@
 						if(typeof nd.data === 'object') {
 							nd.data = JSON.stringify(nd.data);
 						}
-						var txt = nd.host + ':' + nd.data;
+						var txt = nd.data;
 						var id = nd.host+'-'+path_class;
 						if ($('.'+id).length == 0) {
 							$('<div class="'+id+'">'+txt+'</div>').appendTo('.'+path_class);
