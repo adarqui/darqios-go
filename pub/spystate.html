@@ -41,7 +41,7 @@
 							nd.data = JSON.stringify(nd.data);
 						}
 						var txt = nd.data;
-						var id = nd.host+'-'+path_class;
+						var id = nd.host.replace(/\./g,'-')+'-'+path_class;
 						if ($('.'+id).length == 0) {
 							$('<div class="'+id+'">'+txt+'</div>').appendTo('.'+path_class);
 						}
