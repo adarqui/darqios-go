@@ -86,13 +86,17 @@ SPECIAL URLS:
 
 	SOCKET.IO
 
-		http://ip:911/pub/spystate.html#help
-		http://ip:911/pub/spystate.html#state:Data.LoadAvg.last1min
-		http://ip:911/pub/spystate.html#state:Data.Memory
-		http://ip:911/pub/spystate.html#state:Data.Proc
-		http://ip:911/pub/spystate.html#state:Data.Disks.Map.Bandwidth
-		http://ip:911/pub/spystate.html#state:Data.Network.Connections
+		http://ip:911/pub/spystate.html#<account>:help
+		http://ip:911/pub/spystate.html#<account>:state:Data.LoadAvg.last1min
+		http://ip:911/pub/spystate.html#<account>:state:Data.Memory
+		http://ip:911/pub/spystate.html#<account>:state:Data.Proc
+		http://ip:911/pub/spystate.html#<account>:state:Data.Disks.Map.Bandwidth
+		http://ip:911/pub/spystate.html#<account>:state:Data.Network.Connections
 
+		MULTI COLUMN, SPECIFY STATE FIELDS AS ARGUMENTS:
+
+			http://ip:911/pub/spystate.html#certs:state:Data.Ts,Data.LoadAvg.last1min,Data.Network.Connections,Data.Proc.Total,Data.Users.Total,Data.Memory.Free,Data.Disks.Map./.UsedP,Data.Interfaces.Map.wlan0.Tx.Bandwidth,Data.Interfaces.Map.wlan0.Rx.Bandwidth
+	
 
 
 CUBISM EXAMPLES:
@@ -111,7 +115,7 @@ http://ip:911/pub/cubism.html#state,0,100,5000,1000,nil,Network:Connections,ffff
 
 - Disks:
 
-	Disks:<disk mount path>:{Size,Used,Avail,Bandwidth}
+	Disks:<disk mount path>:{Size,Used,Avail,Bandwidth,AvailP,UsedP}
 
 http://ip:911/pub/cubism.html#state,-20000,20000,5000,1000,nil,Disks:/:Bandwidth,ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffff
 ff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:ffffff:00BBBB:00CCCC:00DDDD:00EEEE:00FFFF:00BB5E:00CC66:00DD6F:00EE77:00FF84:BBBB00

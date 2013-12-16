@@ -68,6 +68,12 @@ func (S *State) STATE_Get_Disks() (*Disks) {
 		if err != nil {
 			continue
 		}
+
+		if disk.Size != 0 {
+			disk.AvailP = float64(disk.Avail) / float64(disk.Size) * float64(100)
+			disk.UsedP = float64(disk.Used) / float64(disk.Size) * float64(100)
+		}
+
 		disk.Mount = fields[5]
 		disk.TS_Last = t
 

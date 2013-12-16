@@ -147,6 +147,9 @@ type Disk struct {
 	Size uint64
 	Used uint64
 	Avail uint64
+	/* Available percentage */
+	AvailP float64
+	UsedP float64
 	Mount string
 	Bandwidth int64
 	TS_Last time.Time

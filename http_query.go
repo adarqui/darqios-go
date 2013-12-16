@@ -178,6 +178,12 @@ func (DISK *Disk) PARSE_Disk_Req_Into_Datum(DISK_FIELD string) (interface{}, err
 		case "Bandwidth" : {
 			return DISK.Bandwidth, nil
 		}
+		case "AvailP" : {
+			return DISK.AvailP, nil
+		}
+		case "UsedP" : {
+			return DISK.UsedP, nil
+		}
 		default : {
 			return nil, errors.New("-EPARAM")
 		}
