@@ -99,6 +99,12 @@ SPECIAL URLS:
 	
 
 
+	ALERTS / MISSING / SESSIONS:
+
+		http://ip:911/pub/missing_and_alerts.html
+
+
+
 CUBISM EXAMPLES:
 
 - Load average in the last 1 minute:

@@ -10,6 +10,16 @@ var quickApp = function(opts) {
 		},
 	}
 
+	APP.safeCss = function(name) {
+	// stackoverflow
+		return name.replace(/[^a-z0-9]/g, function(s) {
+			var c = s.charCodeAt(0);
+			if (c == 32) return '-';
+			if (c >= 65 && c <= 90) return '_' + s.toLowerCase();
+			return '__' + ('000' + c.toString(16)).slice(-4);
+		});
+	}
+
 	APP.AppendLog = function(msg) {
 		var d = APP.settings.elm.log[0]
 		var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
@@ -29,6 +39,11 @@ var quickApp = function(opts) {
 			$.getJSON("/query/state/"+x+"/nil/-6/now/-1/nil", function(data, err) {
 				cb(err,data);
 			});
+		},
+		Sessions : function(cb) {
+			$.getJSON("/sessions", function(data, err) {
+				cb(err,data);
+			})
 		}
 	}
 

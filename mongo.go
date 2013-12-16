@@ -123,13 +123,17 @@ func (M *Main) MG_Lookup_Account_By_Hash(Hash string) (*Account, error) {
 func (M *Main) MG_Update_Account_Last_Seen(Account *Account) (bool, error) {
 	t := time.Now()
 	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("accounts")
+	/* Update IP and last timestamp */
 	err := c.Update(bson.M{"hash":Account.Hash}, bson.M{"$set":bson.M{"last":t}})
 	if err != nil {
 		Debug("MG_Update_Account_Last_Seen:Err:%q\n",err)
 		return false, err
 	}
+	// FIXME ^ that should only be one query.. having trouble using $set with two values wtf?
+	_ = c.Update(bson.M{"hash":Account.Hash}, bson.M{"$set":bson.M{"ip":Account.Ip}})
 	return true, nil
 }
+
 
 
 func (M *Main) MG_Insert_Account(Hash string, Host string, Groups []string, Status bool) (*Account, error) {

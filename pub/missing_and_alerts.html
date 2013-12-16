@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SpyState</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script src="/pub/app.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/pub/app.css"/>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+			var app = new quickApp();
+			var init = function() {
+
+				app.Register("new:connection");
+				app.Register("end:connection");
+				app.Register("task");
+				app.Register("missing");
+
+				app.Routes.Sessions(function(err,data) {
+					/* Load the current active sessions first */
+					if(err == null) return;
+
+					for (var v in data) {
+						var session = data[v];
+						handle_new_connection({Data:session});
+					}
+				});
+
+				app.Callback(function(err, channel, message) {
+
+					message = JSON.parse(message);
+//					console.log(err,channel,message);
+
+					switch(channel) {
+						case "missing": return handle_missing(message);
+						case "task": return handle_task(message);
+						case "new:connection" : return handle_new_connection(message);
+						case "end:connection" : return handle_end_connection(message);
+					}
+				});
+
+				var handle_missing = function(m) {
+					var id = m.Host.replace(/\./g,'-')+'-missing';
+					var arr = m.Data.Subject.split(' ');
+					if (arr.length < 12)
+						return
+					var since = arr[12]
+					var txt = m.Host + ': ' + since;
+					if ($('.'+id).length == 0) {
+						$('<div class="'+id+'">'+txt+'</div>').appendTo('.missing')
+					}
+					$('.'+id).text(txt)
+				}
+
+				var handle_task = function(m) {
+					var txt = m.Host + ':' + '{TYPE_PLACEHOLDER}' + ':' + m.Data.Name + ':' + m.Data.Idx + ':' + m.Data.Actual
+
+					var id = app.safeCss(txt)+'-tasks';
+
+					if (m.Data.Type == "clear") {
+						$('.'+id).remove();
+						return;
+					}
+
+					txt = txt.replace(/{TYPE_PLACEHOLDER}/g, m.Data.Type);
+
+					if ($('.'+id).length == 0) {
+						$('<div class="'+id+'">'+txt+'</div>').appendTo('.tasks');
+					}
+					$('.'+id).text(txt);
+
+				}
+
+				var handle_new_connection = function(m) {
+					var id = m.Data.Host.replace(/\./g,'-');
+					var id_missing = id+'-missing';
+					id = id+'-sessions';
+
+					if ($('.'+id_missing).length != 0) {
+						$('.'+id_missing).remove();
+					}
+
+					var txt = m.Data.Host + ': ' + m.Data.Ip;
+					if ($('.'+id).length == 0) {
+						$('<div class="'+id+'">'+txt+'</div>').appendTo('.sessions');
+					}
+					$('.'+id).text(txt);
+				}
+
+				var handle_end_connection = function(m) {
+					var id = m.Data.Host.replace(/\./g,'-')+'-sessions';
+
+					$('.'+id).remove();
+				}
+
+
+				app.WS_Init();
+			}
+
+			init();
+	});
+</script>
+</head>
+
+	<body>
+		<div class="tasks" style="float:left;width:33%"><p>Alerts</p></div>
+		<div class="missing" style="float:left;width:33%"><p>Missing</p></div>
+		<div class="sessions"><p>Sessions</p></div>
+	</body>
+
+</html>

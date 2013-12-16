@@ -1,7 +1,6 @@
 package main
 
 import (
-//	"log"
 	"fmt"
 	"strconv"
 )
@@ -89,6 +88,6 @@ func Task_Network_Port_Check(M *Main, S *State, TD *Task_Data) (bool) {
 
 
 func Task_Network_Port_Check_Alert(M *Main, S *State, TD *Task_Data, Alert_Level string, Port int) {
-	mon := S.MON_Gen_Task(Alert_Level, string(Port), TD.Policy, fmt.Sprintf("%s:%d is not listening", TD.Policy.Idx, Port), "None.")
+	mon := S.MON_Gen_Task(Alert_Level, fmt.Sprintf("%d",Port), TD.Policy, fmt.Sprintf("%s:%d is not listening", TD.Policy.Idx, Port), "None.")
 	M.M<-mon
 }
