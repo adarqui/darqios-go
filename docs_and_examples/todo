@@ -9,3 +9,19 @@ move "alert level" for some of those policies, that's grabbed from thresholds[],
 an all clear alert, for when a server goes from missing to found
 
 listeners, map indexed by proto:port?
+
+custom tasks: {low,med,high,clear}
+	- run a custom script (any executable), return json to stdout.. a few formats will be accepted.. store custom metrics in a seprate collection?
+
+need disable/enable for some specific cases.. curl .../accounts/disable/blah, curl .../accounts/enable/blah
+
+
+accounts:list -> add some other options, such as active {true|false} etc.
+
+monster query: allow multiple graphs, separate #<data> into #{graph1},{graph2}, ... etc
+
+load custom script data into cube
+
+file exists/doesn't exist tasks
+command output pipe task
+

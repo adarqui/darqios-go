@@ -12,6 +12,8 @@ func (M *Main) NET_Client_MON() {
 		"Network" : Task_Network,
 		"Scheduler" : Task_Scheduler,
 		"State" : Task_State,
+		"File" : Task_File,
+		"Pipe" : Task_Pipe,
 		"Custom" : Task_Custom,
 	}
 

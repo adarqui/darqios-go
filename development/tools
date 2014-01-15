@@ -65,6 +65,11 @@ db.state.find({ $query: { "host": "certs" }, $orderby : {"_id":-1}})
 
 db.accounts.update({host:"certs"},{ $set:{groups:["nginx","redis","elastic","php5fpm","staging","production","test_bandwidth","mongo","aspera"]}})
 
+db.accounts.update({host:"certs"},{ $set:{groups:["nginx","redis","elastic","php5fpm
+","staging","production","test_bandwidth","mongo","aspera","sleep1000","sleep2000","
+aspera_pipe_fail","aspera_pipe","scary_file","motd"]}})
+
+
 db.alerts.find({ts:{$lt:ISODate()}}).pretty()
 db.alerts.find({ts:{$lt:ISODate()}}).limit(50).pretty()
 db.alerts.find({host:"certs",ts:{$lt:ISODate()}}).limit(50).pretty()

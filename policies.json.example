@@ -173,8 +173,8 @@
 		{
 			"name" : "Process",
 			"desc" : "Sleep 1000 , !pgrep test",
-			"hosts" : [ "" ],
-			"groups" : [],
+			"hosts" : [],
+			"groups" : [ "sleep1000" ],
 			"idx" : "!running_pgrep",
 			"interval" : 10,
 			"level" : "high",
@@ -186,8 +186,8 @@
 		{
 			"name" : "Process",
 			"desc" : "Sleep 2000 , pgrep test",
-			"hosts" : [ "" ],
-			"groups" : [],
+			"hosts" : [],
+			"groups" : [ "sleep2000" ],
 			"idx" : "running_pgrep",
 			"interval" : 10,
 			"level" : "high",
@@ -241,6 +241,66 @@
 			"idx" : "connections",
 			"params" : [],
 			"thresholds" : [ "1000", "10000", "100000" ],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "File",
+			"desc" : "Check if a file exists or not",
+			"hosts" : [],
+			"groups" : [ "motd" ],
+			"idx" : "!exists",
+			"interval" : 10,
+			"params" : [ "/etc/motd" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "File",
+			"desc" : "Check if a file exists or not",
+			"hosts" : [],
+			"groups" : [ "scary_file" ],
+			"idx" : "exists",
+			"interval" : 10,
+			"params" : [ "/tmp/scary" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Pipe",
+			"desc" : "Check whether a piped commands returns the specified string or not",
+			"hosts" : [],
+			"groups" : [ "aspera_pipe" ],
+			"idx" : "exists",
+			"interval" : 10,
+			"params" : [ "/bin/ascp -A", "Inactive" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Pipe",
+			"desc" : "Check whether a piped commands returns the specified string or not",
+			"hosts" : [],
+			"groups" : [ "aspera_pipe_fail" ],
+			"idx" : "!exists",
+			"interval" : 10,
+			"params" : [ "/bin/ascp -A", "Active" ],
+			"thresholds" : [],
+			"mitigate" : [],
+			"active" : true
+		},
+		{
+			"name" : "Custom:redis_metrics.js",
+			"desc" : "Gather metrics: Redis",
+			"hosts" : [],
+			"groups" : [ "metrics_redis" ],
+			"idx" : "all_metrics",
+			"interval" : 10,
+			"params" : [ "127.0.0.1:6379", "127.0.0.1:6378", "10.77.0.1:6379" ],
+			"thresholds" : [],
 			"mitigate" : [],
 			"active" : true
 		}
