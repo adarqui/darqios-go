@@ -37,7 +37,7 @@ func (M *Main) HTTP_Defaults() {
 // H.Addr = "127.0.0.1:8080
 	M.H.Addr = fmt.Sprintf("%s:%s",M.Startup_Config.Http.Host, M.Startup_Config.Http.Port) //"0.0.0.0:911"
 	M.H.ReadTimeout = time.Duration(512*time.Second)
-	M.H.WriteTimeout = time.Duration(60*time.Second)
+	M.H.WriteTimeout = time.Duration(128*time.Second)
 	M.H.MaxHeaderBytes = 1 << 20
 	return
 }
