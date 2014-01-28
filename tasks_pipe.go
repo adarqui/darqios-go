@@ -19,6 +19,12 @@ func Task_Pipe(M *Main, S *State, TD *Task_Data) (bool) {
 
 func Task_Pipe_Generic(M *Main, S *State, TD *Task_Data, Exists bool) (bool) {
 
+	if M.Startup_Config.Client.Base == "" {
+		return false
+	}
+
+	base_dir := fmt.Sprintf("%s/pipe", M.Startup_Config.Client.Base)
+
 	truth := false
 	alert_level := Task_Get_Alert_Level(TD.Policy)
 
@@ -32,8 +38,22 @@ func Task_Pipe_Generic(M *Main, S *State, TD *Task_Data, Exists bool) (bool) {
 	match_string := params[1]
 	argv := strings.Split(command_argv, " ")
 
+	if len(argv) <= 0 {
+		return false
+	}
+
+	if strings.Contains(argv[0], "/") {
+		return false
+	}
+	/*
 	cmd := exec.Command("/bin/ascp", "-A")
 	cmd.Path = argv[0]
+	cmd.Args = argv
+	*/
+
+	script_path := fmt.Sprintf("%s/%s", base_dir, argv[0])
+	cmd := exec.Command(script_path,"bleh")
+	cmd.Path = script_path
 	cmd.Args = argv
 
 	command_output, err := cmd.CombinedOutput()

@@ -36,6 +36,10 @@ func (TD * Task_Data) MG8_Launch(T *Task) (bool) {
 
 func (TD *Task_Data) MG8_Handle_Alert(T *Task) (bool) {
 
+	if TD.State.M.Startup_Config.Client.Base == "" {
+		return false
+	}
+
 	base_dir := fmt.Sprintf("%s/mitigate", TD.State.M.Startup_Config.Client.Base)
 
 	script := ""

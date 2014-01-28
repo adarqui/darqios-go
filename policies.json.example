@@ -275,9 +275,9 @@
 			"groups" : [ "aspera_pipe" ],
 			"idx" : "exists",
 			"interval" : 10,
-			"params" : [ "/bin/ascp -A", "Inactive" ],
+			"params" : [ "ascp_inactive", "Inactive" ],
 			"thresholds" : [],
-			"mitigate" : [],
+			"mitigate" : ["aspera_reregister.sh"],
 			"active" : true
 		},
 		{
@@ -287,9 +287,9 @@
 			"groups" : [ "aspera_pipe_fail" ],
 			"idx" : "!exists",
 			"interval" : 10,
-			"params" : [ "/bin/ascp -A", "Active" ],
+			"params" : [ "ascp_active", "Active" ],
 			"thresholds" : [],
-			"mitigate" : [],
+			"mitigate" : ["aspera_reregister.sh"],
 			"active" : true
 		},
 		{
