@@ -32,6 +32,7 @@ var quickApp = function(opts) {
 	APP.Routes = {
 		Accounts_List : function(cb) {
 			$.getJSON("/accounts:list", function(data,err) {
+				data.Accounts.sort();
 				cb(err,data);
 			});
 		},
