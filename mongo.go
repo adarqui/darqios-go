@@ -285,13 +285,15 @@ func (M *Main) MG_Accounts(Hosts []string, Groups []string) ([]Account, error) {
 	var accounts []Account
 	c := M.Mongo.Ses.DB(M.Startup_Config.Mongo.Db).C("accounts")
 
+	// bson.M{"ignore":bson.M{"$ne":true}}
+
 	var err error
 	if len(Hosts) != 0 && Hosts != nil {
 		err = c.Find(bson.M{"host":bson.M{"$in":Hosts}}).All(&accounts)
 	} else if len(Groups) != 0 && Groups != nil {
 		err = c.Find(bson.M{"groups":bson.M{"$in":Groups}}).All(&accounts)
 	} else {
-		err = c.Find(nil).All(&accounts)
+		err = c.Find(bson.M{"status":bson.M{"$ne":false}}).All(&accounts)
 	}
 
 	if err != nil {
