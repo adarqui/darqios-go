@@ -1,0 +1,11 @@
+handle.sh
+
+	- handles generated alerts. For example, you may put this in: /etc/darqios/alerts/handle.sh
+	- You would then symlink /etc/darqios/alerts/{clear.sh,low.sh,med.sh,high.sh} to the handle.sh script
+
+
+nodemailer.js
+
+	- simple script to mail an alert to a group of people
+	- npm install nodemailer
+	- In the above example, this would go in /etc/darqios/alerts/nodemailer.js

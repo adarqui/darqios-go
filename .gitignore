@@ -6,5 +6,9 @@ src
 conf.json
 policies.json
 mitigate
+*.o
+*.hi
+.cabal-sandbox
+handle
 !testing/darqios
 !testing/darqios/mitigate
