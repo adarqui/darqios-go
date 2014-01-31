@@ -1,3 +1,7 @@
+import AP.Config.Config
+import System.Environment
+
 main :: IO ()
 main = do
-	print "hi"
+	x <- getArgs
+	print x
