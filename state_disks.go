@@ -48,6 +48,10 @@ func (S *State) STATE_Get_Disks() (*Disks) {
 			continue
 		}
 		fields := strings.Fields(v)
+		if len(fields) < 5 {
+			continue
+		}
+
 //		log.Printf("FIELDS: %q %v %v\n", fields, fields[0], fields[1])
 		disk := new(Disk)
 		disk.Name = fields[0]
