@@ -22,6 +22,7 @@
 				var static_fields = [ "Host" ]
 				var paths = arr[2].split(',')
 				paths = static_fields.concat(paths)
+/*
 
 				for (var v in paths) {
 					var path = paths[v];
@@ -29,6 +30,7 @@
 					var div = $('<div style="float:left;margin-left:20px" class="'+path_class+' .column">').appendTo('body');
 					div.append('<p>'+path+'</p>');
 				}
+*/
 
 				app.Register(channel)
 				app.Callback(function(error, channel, message) {
@@ -89,12 +91,48 @@
 				})
 			}
 
-			if (channel == "help") {
-				return help();
-			} else {
-				init();
-			}
+			app.Routes.Accounts_List(function(err,data) {
+				hosts = data.Accounts.sort();
+				var static_fields = [ "Host" ]
+				var paths = arr[2].split(',')
+				paths = static_fields.concat(paths)
+				for (var v in paths) {
+					var path = paths[v];
+					var path_class = path.replace(/\./g, '-').replace(/\//g, '_');
+					var div = $('<div style="float:left;margin-left:20px" class="'+path_class+' .column">').appendTo('body');
+					div.append('<p>'+path+'</p>');
+				}
+for(var w in hosts) {
+var host = hosts[w];
+					for (var v in paths) {
+						var path = paths[v];
+						var path_class = path.replace(/\./g,'-').replace(/\//g,'_');
+						var txt = host; 
+						var id = host.replace(/\./g,'-')+'-'+path_class;
+						if ($('.'+id).length == 0) {
+							$('<div class="'+id+'">'+txt+'</div>').appendTo('.'+path_class);
+						}
+						if(path == 'Host') {
+							$('.'+id).text(host);
+						} else {
+							$('.'+id).text(0);
+						}
+					}
+}
+				if (channel == "help") {
+					return help();
+				} else {
+					init();
+				}
+			});
 
+/*
+				if (channel == "help") {
+					return help();
+				} else {
+					init();
+				}
+*/
 		});
 	</script>
 </head>
