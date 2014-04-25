@@ -46,7 +46,6 @@ if [ $# -eq 7 ] ; then
     DATE_END=`grab_date "$7"`
 fi
 
-#CMD="use darqios\ndb.state.find({'loadavg.last1min': {\$gte:$VAL_START, \$lte:$VAL_END}, 'ts': {\$gte:new Date($DATE_START), \$lte: new Date($DATE_END)}}).limit($LIMIT).pretty()\n"
 CMD="use darqios\ndb.state.find({'host': '$HOST', '$STATE_OBJ': {\$gte:$VAL_START, \$lte:$VAL_END}, 'ts': {\$gte:new ISODate('$DATE_START'), \$lte: new ISODate('$DATE_END')}}).limit($LIMIT).pretty()\n"
 
 echo $CMD
