@@ -12,3 +12,5 @@ mitigate
 handle
 !testing/darqios
 !testing/darqios/mitigate
+pipe
+testing/darqios/mitigate/disk
