@@ -165,6 +165,12 @@ func (M *Main) NET_Server_Handle_Client(Conn net.Conn) {
 			/* What? */
 			return
 		}
+
+		/* Force dynamic configuration of hostname, eventually make this optional */
+		wop := WOP_Gen_Rep_Hostname_Config(account.Host)
+		wop_bytes, _ := WOP_To_Bytes(wop)
+		Conn.Write(wop_bytes)
+
 	} else {
 		return
 	}

@@ -100,3 +100,7 @@ type Policies_Config struct {
 	Options Options
 	Alerts *Alerts
 }
+
+type Hostname_Config struct {
+	Name string
+}

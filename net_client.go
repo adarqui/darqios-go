@@ -80,6 +80,7 @@ func (M *Main) NET_Client_Handle_WOP(wop *WOP) {
 
 	switch wop.Code {
 		case WOP_REP_POLICIES_CONFIG: M.NET_Client_Handle_WOP_Policies_Config(wop)
+		case WOP_REP_HOSTNAME_CONFIG: M.NET_Client_Handle_WOP_Hostname_Config(wop)
 	}
 }
 
@@ -88,6 +89,14 @@ func (M *Main) NET_Client_Handle_WOP_Policies_Config(wop *WOP) {
 	if policies_config,ok := wop.Data.(Policies_Config); ok {
 		DebugLn("NET_Client_Handle_WOP_Policies_Config:Success")
 		M.Policies_Config = &policies_config
+	}
+	return
+}
+
+func (M *Main) NET_Client_Handle_WOP_Hostname_Config(wop *WOP) {
+	if hostname_config,ok := wop.Data.(Hostname_Config); ok {
+		DebugLn("NET_Client_Handle_WOP_Hostname_Config:Success")
+		setHostname(hostname_config.Name)
 	}
 	return
 }

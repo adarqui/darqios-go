@@ -20,6 +20,7 @@ const (
 	WOP_REP_NOTOK = 2
 	WOP_REP_DIE = 3
 	WOP_REP_POLICIES_CONFIG = 4
+	WOP_REP_HOSTNAME_CONFIG = 5
 )
 
 /*
@@ -83,6 +84,14 @@ func WOP_Gen_Rep_Policies_Config(Policies_Config *Policies_Config)(*WOP){
 	return wop
 }
 
+func WOP_Gen_Rep_Hostname_Config(host string)(*WOP){
+	Hostname_Config := new (Hostname_Config)
+	Hostname_Config.Name = host
+	wop := new(WOP)
+	wop.Code = WOP_REP_HOSTNAME_CONFIG
+	wop.Data = Hostname_Config
+	return wop
+}
 
 func WOP_Gen_Task_Notification(Task interface{}) (*WOP){
 	wop := new(WOP)
